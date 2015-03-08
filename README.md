@@ -56,7 +56,7 @@ The same function is used for parsing JSON strings and files.
 Simply append `T` as the last argument if you want to parse a file.
 
 ```lisp
-pil ./test.l +
+pil +
 
 (load "json.l")
 
@@ -71,7 +71,7 @@ pil ./test.l +
 
 ```lisp
 
-pil ./test.l +
+pil +
 
 (load "json.l")
 
