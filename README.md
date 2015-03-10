@@ -42,10 +42,26 @@ All functions are publicly accessible and namespaced with `(symbols 'json)` (or 
   * `(decode arg1 arg2)` parses a JSON string or file
     - `arg1` _String_: the JSON string or filename you want to decode
     - `arg2` _Flag (optional)_: a flag (`T` or `NIL`) indicating to parse a file if set
-  * `(encode arg1)`: serializes a list into a JSON string
+  * `(encode arg1)` serializes a list into a JSON string
     - `arg1` _List_: a PicoLisp list which will be converted to a JSON string
 
-A successful result will return a list. Failures return `NIL`. Keys are in `car`, values are in `cdr`. Values might also be lists.
+### JSON-PicoLisp data type table
+
+| JSON | PicoLisp | Example |
+| ---- | -------- | ------- |
+| Number | Number | `25 <-> 25` |
+| String | String | `"hello" <-> "hello"` |
+| Null | Transient _null_ Symbol | `null <-> 'null` |
+| Boolean | Transient _true_ or _false_ Symbol | `true <-> 'true` |
+| Array | List with T in cdar | `{"array":[1,2,3]} <-> '("array" T 1 2 3)` |
+| Object | Cons pair | `{"hello":"world"} <-> '(("hello" . "world"))` |
+
+### Notes
+
+  * A successful result will return a list. Failures return `NIL`.
+  * Keys are in `car`, values are in `cdr`.
+  * When the 2nd item in the list is `T`, the rest of the list represents a JSON array.
+  * When the 2nd item in the list is a cons pair, it represents a JSON object.
 
 # Examples
 
@@ -112,4 +128,5 @@ If you want to improve this library, please make a pull-request.
 # License
 
 [MIT License](LICENSE)
+
 Copyright (c) 2015 Alexander Williams, Unscramble <license@unscramble.jp>
