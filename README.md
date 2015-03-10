@@ -59,6 +59,7 @@ pil +
 (symbols 'json)
 
 (decode "{\"Hello\":\"World\"}")
+
 -> (("Hello" . "World"))
 ```
 
@@ -76,7 +77,15 @@ pil +
 
 (decode "test.json" T)
 
--> (("first" . "John") ("last" . "Doe") ("age" . 25) ("registered" . true) ("interests" T "Reading" "Mountain Biking") ("favorites" ("color" . "blue") ("sport" . "running")) ("utf string" . "lorem ipsum") ("utf-8 string" . "あいうえお") ("surrogate string" . "lorem�ipsum�lorem"))
+-> (("first" . "John")
+    ("last" . "Doe")
+    ("age" . 25)
+    ("registered" . true)
+    ("interests" T "Reading" "Mountain Biking")
+    ("favorites" ("color" . "blue") ("sport" . "running"))
+    ("utf string" . "lorem ipsum")
+    ("utf-8 string" . "あいうえお")
+    ("surrogate string" . "lorem�ipsum�lorem") )
 ```
 
 ### (encode List)
