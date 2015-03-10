@@ -1,6 +1,6 @@
 # JSON Encoder/Decoder for PicoLisp
 
-[![GitHub release](https://img.shields.io/github/release/aw/picolisp-json.svg)](https://github.com/aw/picolisp-json)
+[![GitHub release](https://img.shields.io/github/release/aw/picolisp-json.svg)](https://github.com/aw/picolisp-json) [![Dependency](https://img.shields.io/badge/Parson-master-ff69b4.svg)](https://github.com/kgabis/parson)
 
 This library can be used to parse and serialize (encode/decode) JSON strings in [PicoLisp](http://picolisp.com/).
 
@@ -25,7 +25,7 @@ These FFI bindings require the [Parson C library](https://github.com/kgabis/pars
 
   1. Type `./build.sh` to pull and compile the _Parson C Library_.
   2. Include `json.l` in your project
-  3. Try the example below
+  3. Try the [examples](#examples) below
 
 ### Linking and Paths
 
@@ -39,11 +39,11 @@ The `json.l` file searches for `lib/libparson.so`, relative to its current direc
 
 All functions are publicly accessible and namespaced with `(symbols 'json)` (or the prefix: `json~`), but only the following are necessary:
 
-  * `decode arg1 arg2`: parses a JSON string or file
-    * `arg1`: String: the JSON string or filename you want to decode
-    * `arg2`: Flag (optional): a flag (`T` or NIL) indicating to parse a file if set
-  * `encode arg1`: serializes a list into a JSON string
-    * `arg`: List: a PicoLisp list which will be converted to a JSON string
+  * `(decode arg1 arg2)` parses a JSON string or file
+    - `arg1` _String_: the JSON string or filename you want to decode
+    - `arg2` _Flag (optional)_: a flag (`T` or `NIL`) indicating to parse a file if set
+  * `(encode arg1)`: serializes a list into a JSON string
+    - `arg1` _List_: a PicoLisp list which will be converted to a JSON string
 
 A successful result will return a list. Failures return `NIL`. Keys are in `car`, values are in `cdr`. Values might also be lists.
 
