@@ -172,7 +172,7 @@ This function does nothing special, but I wanted to show something interesting.
 
 You'll notice we check if `Value` is `==` to `'null`. What's going on here? Using double equal signs checks for [**Pointer equality**](http://software-lab.de/doc/ref.html#cmp). This is really important, make sure you understand the difference for a happy PicoLisp life.
 
-This checks if the things we're comparing are not just equal, but also _identical_. In other words: Is `'null` the exact same thing as `'null` (`Value`). Not `"null"` or `null` or any other variation, but `'null`. Yes. Got it?
+This checks if the things we're comparing are not just equal, but also _identical_. In other words: Is `null` the exact same thing as `null` (`Value`). Not `"null"` or `NULL` or any other variation, but `null`. Yes. Got it?
 
 ### (get-json-array)
 
