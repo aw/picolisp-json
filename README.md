@@ -1,6 +1,6 @@
 # JSON Encoder/Decoder for PicoLisp
 
-This library can be used to parse and serialize (encode/decode) JSON strings in [PicoLisp](http://picolisp.com/). It relies on the  native C library.
+This library can be used to parse and serialize (encode/decode) JSON strings in [PicoLisp](http://picolisp.com/).
 
 ![picolisp-json](https://cloud.githubusercontent.com/assets/153401/6571543/56e31e44-c701-11e4-99f0-c2c51fd8061b.png)
 
