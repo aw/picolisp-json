@@ -1,17 +1,20 @@
 # JSON Encoder/Decoder for PicoLisp
 
-[![GitHub release](https://img.shields.io/github/release/aw/picolisp-json.svg)](https://github.com/aw/picolisp-json) [![Dependency](https://img.shields.io/badge/Parson-master-ff69b4.svg)](https://github.com/kgabis/parson)
+[![GitHub release](https://img.shields.io/github/release/aw/picolisp-json.svg)](https://github.com/aw/picolisp-json) [![Dependency](https://img.shields.io/badge/[deps] Parson-master-ff69b4.svg)](https://github.com/kgabis/parson)
 
 This library can be used to parse and serialize (encode/decode) JSON strings in [PicoLisp](http://picolisp.com/).
 
 ![picolisp-json](https://cloud.githubusercontent.com/assets/153401/6571543/56e31e44-c701-11e4-99f0-c2c51fd8061b.png)
 
+Please read [EXPLAIN.md](EXPLAIN.md) to learn more about PicoLisp and this JSON library.
+
   1. [Requirements](#requirements)
   2. [Getting Started](#getting-started)
   3. [Usage](#usage)
   4. [Examples](#examples)
-  5. [Contributing](#contributing)
-  6. [License](#license)
+  5. [Alternatives](#alternatives)
+  6. [Contributing](#contributing)
+  7. [License](#license)
 
 # Requirements
 
@@ -118,6 +121,13 @@ pil +
 
 -> "{\"Hello\":\"World\"}"
 ```
+
+# Alternatives
+
+The following are alternatives written in pure PicoLisp. They are limited by pipe/read syscalls.
+
+* [JSON reader/writer](http://rosettacode.org/wiki/JSON#PicoLisp) by Alexander Burger.
+* [JSON reader/writer](https://bitbucket.org/hsarvell/ext/src/9d6e5a15c5ce7cb47033e0082ef70aee6c4c8dd7/json.l?at=default) by Henrik Sarvell.
 
 # Contributing
 
