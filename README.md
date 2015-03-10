@@ -1,10 +1,10 @@
 # JSON Encoder/Decoder for PicoLisp
 
+[![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)](https://github.com/aw/picolisp-json)
+
 This library can be used to parse and serialize (encode/decode) JSON strings in [PicoLisp](http://picolisp.com/).
 
 ![picolisp-json](https://cloud.githubusercontent.com/assets/153401/6571543/56e31e44-c701-11e4-99f0-c2c51fd8061b.png)
-
-[![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)](https://github.com/aw/picolisp-json)
 
   1. [Requirements](#requirements)
   2. [Getting Started](#getting-started)
