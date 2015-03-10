@@ -176,7 +176,7 @@ This checks if the things we're comparing are not just equal, but also _identica
 
 ### (get-json-array)
 
-If you don't have amnesia, you will remember earlier we discussed appending `T` as the first element in the list, in the case of an Array.
+You should remember earlier we discussed appending `T` as the first element in the list, in the case of an Array.
 
 ```lisp
 [de get-json-array (Value)
