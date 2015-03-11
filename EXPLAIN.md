@@ -115,7 +115,19 @@ You'll notice we added `(link T)` before the [for loop](http://software-lab.de/d
 
 The `(for)` loop is rather simple, but in each case we're obtaining new values by performing native C calls, and then adding to the list using `(link)`.
 
-If you've had your coffee today, you would notice the [dec](http://software-lab.de/doc/refD.html#dec) call. As it turns out, `(for)` starts with the total number of items in the Array. We use `(dec N)` to count down (to zero).
+If you've had your coffee today, you would notice the [dec](http://software-lab.de/doc/refD.html#dec) call. As it turns out, `(for)` starts with 1 and counts to the total number of items in the Array. We use `(dec N)` to start at 0.
+
+Example:
+
+```
+for N 5
+  N = 1
+  (json-array-get-value Arr 0)
+  ..
+  N = 2
+  (json-array-get-value Arr 1)
+  ..
+```
 
 Finally, the `(link)` function makes a call to `(iterate-object)`. Remember earlier? when `(link-json-array)` was called within `(iterate-object)`?
 
@@ -126,6 +138,12 @@ The reason we perform this recursion is in case the value in the array is itself
 ### (link-json-object)
 
 The `(link-json-object)` is similar to `(link-json-array)` except, you guessed it, it loops over objects.
+
+```lisp
+..
+(link (cons Name (iterate-object Val)))
+..
+```
 
 The other difference is during the `(link)` call, it appends a [cons](http://software-lab.de/doc/refC.html#cons) pair instead of a single value. We do this because a JSON Object is represented as a `(cons)` pair in PicoLisp.
 
@@ -199,7 +217,7 @@ This function builds an Array suitable for JSON.
         "]" ]
 ```
 
-We've seen what [pack](http://software-lab.de/doc/refP.html#pack) does so I won't explain it again. We use it to build our Array with opening and closing `[]` brackets.
+We've seen what [pack](http://software-lab.de/doc/refP.html#pack). We use it to build our Array with opening and closing `[]` brackets.
 
 The cool thing I discovered recently is [glue](http://software-lab.de/doc/refG.html#glue). It is similar to `Array.join()` in Ruby and JavaScript, by concatenating a list with the supplied argument. In our case, it's a comma `,`.
 
@@ -207,9 +225,11 @@ Here we're doing something a little different.
 
 If you remember `(mapcar)`, you'll know the first argument is a function, but in this code we have this: `'((N) (iterate-list (cons NIL N)))`.
 
-What we have is an **anonymous function**. If you're familiar with Ruby, it looks something like this: `-> { do_stuff() }`.
+What we have is an **anonymous function**. If you're familiar with Ruby, it looks something like this:
 
-In the case of PicoLisp, our function that we defined on the fly will be applied to the `Value`, but will first make a recursive call to `(iterate-list)` with a `(cons)` pair as its argument. I won't give a tutorial on anonymous functions here.
+    ->(N) { iterate-list [nil, N] }
+
+In the case of PicoLisp, our function that we defined on the fly will be applied to the `Value`, but will first make a recursive call to `(iterate-list)` with a `(cons)` pair as its argument.
 
 ### (make-object)
 
