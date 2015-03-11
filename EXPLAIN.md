@@ -7,6 +7,8 @@ It's split into a few sections for easier reading:
 1. [Global variables](#global-variables): Important variables used throughout the library.
 2. [Native calls (ffi-bindings)](#native-calls-ffi-bindings): The `Parson` native C library, and how it's used.
 3. [Internal functions](#internal-functions): Recursion and datatype-checking.
+  * [decoding JSON](#decoding-json)
+  * [encoding JSON](#encoding-json)
 
 Make sure you read the [README](README.md) to get an idea of what this library does.
 
@@ -223,9 +225,13 @@ The cool thing I discovered recently is [glue](http://software-lab.de/doc/refG.h
 
 Here we're doing something a little different.
 
-If you remember `(mapcar)`, you'll know the first argument is a function, but in this code we have this: `'((N) (iterate-list (cons NIL N)))`.
+If you remember `(mapcar)`, you'll know the first argument is a function, but in this code we have this:
 
-What we have is an **anonymous function**. If you're familiar with Ruby, it looks something like this:
+```lisp
+'((N) (iterate-list (cons NIL N)))
+```
+
+Above is an **anonymous function**. If you're familiar with Ruby, it looks something like this:
 
 ```ruby
 ->(N) { iterate-list [nil, N] }
