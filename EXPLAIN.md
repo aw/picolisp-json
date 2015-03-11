@@ -217,7 +217,7 @@ This function builds an Array suitable for JSON.
         "]" ]
 ```
 
-We've seen what [pack](http://software-lab.de/doc/refP.html#pack). We use it to build our Array with opening and closing `[]` brackets.
+We've seen what [pack](http://software-lab.de/doc/refP.html#pack) does. We use it to build our Array with opening and closing `[]` brackets.
 
 The cool thing I discovered recently is [glue](http://software-lab.de/doc/refG.html#glue). It is similar to `Array.join()` in Ruby and JavaScript, by concatenating a list with the supplied argument. In our case, it's a comma `,`.
 
@@ -227,7 +227,9 @@ If you remember `(mapcar)`, you'll know the first argument is a function, but in
 
 What we have is an **anonymous function**. If you're familiar with Ruby, it looks something like this:
 
-    ->(N) { iterate-list [nil, N] }
+```ruby
+->(N) { iterate-list [nil, N] }
+```
 
 In the case of PicoLisp, our function that we defined on the fly will be applied to the `Value`, but will first make a recursive call to `(iterate-list)` with a `(cons)` pair as its argument.
 
