@@ -2,7 +2,7 @@
 
 [setq MODULE_INFO
   '(("name"       "json")
-    ("version"    "0.2.2")
+    ("version"    "0.2.3")
     ("summary"    "JSON encode/decoder ffi-bindings for PicoLisp")
     ("source"     "https://github.com/aw/picolisp-json.git")
     ("author"     "Alexander Williams")
@@ -11,7 +11,8 @@
     ("install"    "build.sh") ]
 
 (setq
-  *Json         "lib/libparson.so"
+  *Json         (pack (car (file)) "lib/libparson.so")
+
   *JSONError    -1
   *JSONNull     1
   *JSONString   2
