@@ -2,7 +2,7 @@
 
 [setq MODULE_INFO
   '(("name"       "json")
-    ("version"    "0.2.3")
+    ("version"    "0.2.4")
     ("summary"    "JSON encode/decoder ffi-bindings for PicoLisp")
     ("source"     "https://github.com/aw/picolisp-json.git")
     ("author"     "Alexander Williams")
