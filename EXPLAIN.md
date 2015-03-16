@@ -20,7 +20,7 @@ A few global variables have been defined at the top of the file.
 
 ```lisp
 (setq
-  *Json         "lib/libparson.so"
+  *Json         (pack (car (file)) "lib/libparson.so")
   *JSONError    -1
   *JSONNull     1
   *JSONString   2
