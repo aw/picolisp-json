@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.6 (2015-03-19)
+
+  * Move MODULE_INFO into module.l
+
 ## 0.2.5 (2015-03-19)
 
   * Add unit tests using picolisp-unit
