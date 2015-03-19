@@ -1,3 +1,9 @@
+# json.l
+#
+# The MIT License (MIT)
+#
+# Copyright (c) 2015 Alexander Williams, Unscramble <license@unscramble.jp>
+
 (symbols 'json 'pico)
 
 (load (pack (car (file)) "module.l"))
