@@ -1,6 +1,6 @@
 # JSON Encoder/Decoder for PicoLisp
 
-[![GitHub release](https://img.shields.io/github/release/aw/picolisp-json.svg)](https://github.com/aw/picolisp-json) [![Dependency](https://img.shields.io/badge/[deps] Parson-master-ff69b4.svg)](https://github.com/kgabis/parson)
+[![GitHub release](https://img.shields.io/github/release/aw/picolisp-json.svg)](https://github.com/aw/picolisp-json) [![Build Status](https://travis-ci.org/aw/picolisp-json.svg?branch=master)](https://travis-ci.org/aw/picolisp-json) [![Dependency](https://img.shields.io/badge/[deps] Parson-master-ff69b4.svg)](https://github.com/kgabis/parson) [![Dependency](https://img.shields.io/badge/[deps] picolisp--unit-v0.3.0-ff69b4.svg)](https://github.com/aw/picolisp-unit.git)
 
 This library can be used to parse and serialize (encode/decode) JSON strings in [PicoLisp](http://picolisp.com/).
 
@@ -12,9 +12,10 @@ Please read [EXPLAIN.md](EXPLAIN.md) to learn more about PicoLisp and this JSON 
   2. [Getting Started](#getting-started)
   3. [Usage](#usage)
   4. [Examples](#examples)
-  5. [Alternatives](#alternatives)
-  6. [Contributing](#contributing)
-  7. [License](#license)
+  5. [Testing](#testing)
+  6. [Alternatives](#alternatives)
+  7. [Contributing](#contributing)
+  8. [License](#license)
 
 # Requirements
 
@@ -37,6 +38,12 @@ Once compiled, the shared library is symlinked as:
     lib/libparson.so -> vendor/parson/libparson.so
 
 The `json.l` file searches for `lib/libparson.so`, relative to its current directory.
+
+### Updating
+
+This library uses git submodules, type this keep everything updated:
+
+    ./update.sh
 
 # Usage
 
@@ -121,6 +128,12 @@ pil +
 
 -> "{\"Hello\":\"World\"}"
 ```
+
+# Testing
+
+This library now comes with full [unit tests](https://github.com/aw/picolisp-unit). To run the tests, run:
+
+    ./test.l
 
 # Alternatives
 

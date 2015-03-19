@@ -10,6 +10,7 @@ git submodule init
 git submodule update
 
 cd vendor/parson
+  rm -f libparson.so
   gcc -O0 -g -Wall -Wextra -std=c89 -pedantic-errors -fPIC -shared -Wl,-soname,libparson.so -o libparson.so parson.c
 cd -
 
