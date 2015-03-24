@@ -39,4 +39,6 @@
   '(test-decode-string)
   '(test-decode-file)
   '(test-decode-invalid)
-  '(test-encode-string) ]
+  '(test-encode-string)
+  '(unit~assert-nil (= "json" (cadr (assoc "name" pico~MODULE_INFO)))
+                    "Ensure local symbols are not leaked globally" ]

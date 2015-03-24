@@ -6,6 +6,12 @@
 
 (symbols 'json 'pico)
 
+(local MODULE_INFO *Json *JSONError *JSONNull *JSONString *JSONNumber *JSONObject *JSONArray *JSONBoolean *JSONSuccess *JSONFailure)
+(local json-parse-file json-parse-string json-value-init-object json-type json-array json-object json-string json-number)
+(local json-array-get-count json-object-get-count json-array-get-value json-object-get-value json-object-get-name json-value-free)
+(local link-json-array link-json-object iterate-object iterate-list get-null get-boolean get-json-number get-json-string get-json-array)
+(local make-object make-array)
+
 (load (pack (car (file)) "module.l"))
 
 (setq

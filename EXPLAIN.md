@@ -16,6 +16,14 @@ Also, I recommend you read my [Nanomsg Explanation](https://github.com/aw/picoli
 
 # Global variables
 
+PicoLisp does not prevent variables from leaking into the global namespace. In order to prevent that, you must use [local](http://software-lab.de/doc/refL.html#local) and define exactly what should _not_ affect the global namespace. This is important to avoid un-intended side-effects.
+
+```lisp
+(local MODULE_INFO *Json *JSONError *JSONNull)
+```
+
+This will ensure the variables will not affect anything outside their current scope (namespace). It's similar to `var Myvar;` in JavaScript.
+
 A few global variables have been defined at the top of the file.
 
 ```lisp
