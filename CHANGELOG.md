@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1 (2015-03-30)
+
+  * Update picolisp-unit to v0.5.2
+
 ## 0.3.0 (2015-03-24)
 
   * Prevent leaky globals
