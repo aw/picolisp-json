@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0 (2015-04-04)
+
+  * Add requires to module.l
+  * Update README.md and EXPLAIN.md
+  * Replace ffi-bindings with a table, to be more lispy
+  * Rename some internal functions
+
 ## 0.3.1 (2015-03-30)
 
   * Update picolisp-unit to v0.5.2

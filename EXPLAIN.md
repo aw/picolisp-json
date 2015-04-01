@@ -6,6 +6,7 @@ It's split into a few sections for easier reading:
 
 1. [Global variables](#global-variables): Important variables used throughout the library.
 2. [Native calls (ffi-bindings)](#native-calls-ffi-bindings): The `Parson` native C library, and how it's used.
+  * [A rule-based solution](#a-rule--based-solution)
 3. [Internal functions](#internal-functions): Recursion and datatype-checking.
   * [decoding JSON](#decoding-json)
   * [encoding JSON](#encoding-json)
@@ -62,7 +63,7 @@ When working with a native C library in PicoLisp, it's important to use the same
 Example:
 
 ```lisp
-(json-type (json-parse-string "{\"Hello\":\"World\"}"))
+(json-ffi 'json-type (json-ffi 'json-parse-string "{\"Hello\":\"World\"}"))
 -> 4
 ```
 
@@ -70,9 +71,44 @@ This returns `4` which is `*JSONObject` based on our variables defined earlier.
 
 As we'll see later, our `picolisp-json` library can make decisions on how to parse data based on these types of results.
 
+### A rule-based solution
+
+Inspired by the amazing ["Paradigms of Artificial Intelligence"](http://norvig.com/paip/README.html) book (Chapter 2), I wrote the ffi functions using a rule-based approach.
+
+First we create a simple list which declares all the ffi functions and their result type:
+
+```lisp
+[de json-ffi-table
+  (json-parse-file          'N)
+  (json-parse-string        'N)
+  (json-value-init-object   'N)
+  (json-type                'I)
+  (json-array               'N) ]
+# snipped for brevity
+```
+
+We then use a function which maps the first argument `Function` to a name in the list:
+
+```lisp
+[de json-ffi (Function . @)
+  (let Rule (assoc Function json-ffi-table)
+    (pass native `*Json (chop-ffi (car Rule)) (eval (cadr Rule) ]
+```
+
+The `(json-ffi)` function calls `(native)` using [pass](http://software-lab.de/doc/refP.html#pass), to append the rest of the variable-length arguments in `@` at the end of the function.
+
+You'll notice `(chop-ffi)` actually converts the `-` characters to `_`. This is necessary because the C function names have underscores instead of dashes, but in general I think the LISP world prefers dashes for function names.
+
+```lisp
+[de chop-ffi (Name)
+  (glue "_" (split (chop Name) "-") ]
+```
+
+I think this is a very lispy approach. It allows us to easily add new native functions by simply adding to the `json-ffi-table`. No other code modifications are necessary.
+
 # Internal functions
 
-The meat of this library is in the internal functions. The `(json-parse-string)` and `(json-parse-file)` functions validate the JSON string. If those calls are successful, then we can safely iterate over the result and generate our own list.
+The meat of this library is in the internal functions. The `'json-parse-string` and `'json-parse-file` functions validate the JSON string. If those calls are successful, then we can safely iterate over the result and generate our own list.
 
 ## decoding JSON
 
@@ -85,14 +121,14 @@ We'll first look at the `(iterate-object)` function. This is a recursive functio
 ```lisp
 [de iterate-object (Value)
   (make
-    (let Type (json-type Value)
+    (let Type (json-ffi 'json-type Value)
       (case Type  (`*JSONArray    (link-json-array  Value))
                   (`*JSONObject   (link-json-object Value))
-                  (`*JSONString   (chain (json-string  Value)))
+                  (`*JSONString   (chain (json-ffi 'json-string  Value)))
                   [`*JSONBoolean  (chain (cond
-                                            ((= 1 (json-boolean Value)) 'true)
-                                            ((= 0 (json-boolean Value)) 'false) ]
-                  (`*JSONNumber   (chain (json-number  Value)))
+                                            ((= 1 (json-ffi 'json-boolean Value)) 'true)
+                                            ((= 0 (json-ffi 'json-boolean Value)) 'false) ]
+                  (`*JSONNumber   (chain (json-ffi 'json-number  Value)))
                   (`*JSONNull     (chain 'null)) ]
 ```
 
@@ -114,10 +150,10 @@ When the value is an Array (`Type = 5 = *JSONArray`), we loop through it to buil
 
 ```lisp
 [de link-json-array (Value)
-  (let Arr (json-array Value)
+  (let Arr (json-ffi 'json-array Value)
     (link T)
-    (for N (json-array-get-count Arr)
-      (let Val (json-array-get-value Arr (dec N))
+    (for N (json-ffi 'json-array-get-count Arr)
+      (let Val (json-ffi 'json-array-get-value Arr (dec N))
         (link (iterate-object Val)) ]
 ```
 
@@ -132,10 +168,10 @@ Example:
 ```
 for N 5
   N = 1
-  (json-array-get-value Arr 0)
+  (json-ffi 'json-array-get-value Arr 0)
   ..
   N = 2
-  (json-array-get-value Arr 1)
+  (json-ffi 'json-array-get-value Arr 1)
   ..
 ```
 
@@ -175,11 +211,11 @@ Since we now have a friendly JSON string represented as a PicoLisp list, we'll i
 [de iterate-list (Item)
   (let Value (cdr Item)
     (or
-      (get-null Value)
-      (get-boolean Value)
-      (get-json-number Value)
-      (get-json-string Value)
-      (get-json-array Value)
+      (make-null Value)
+      (make-boolean Value)
+      (make-json-number Value)
+      (make-json-string Value)
+      (make-json-array Value)
       (make-object Value) ]
 ```
 
@@ -189,12 +225,12 @@ This is a bit sneaky, but I :heart: it. I'm not sure how efficient it is either,
 
 This function uses [or](http://software-lab.de/doc/refO.html#or) as a conditional statement. The `Value` passes through each function to determine the type of value it is, as well as to convert it to a string, number, boolean, null, or whatever.
 
-### (get-null)
+### (make-null)
 
 This function does nothing special, but I wanted to show something interesting.
 
 ```lisp
-[de get-null (Value)
+[de make-null (Value)
   (when (== 'null Value) "null") ]
 ```
 
@@ -202,12 +238,12 @@ You'll notice we check if `Value` is `==` to `'null`. What's going on here? Usin
 
 This checks if the things we're comparing are not just equal, but also _identical_. In other words: Is `null` the exact same thing as `null` (`Value`). Not `"null"` or `NULL` or any other variation, but `null`. Yes. Got it?
 
-### (get-json-array)
+### (make-json-array)
 
 You should remember earlier we discussed appending `T` as the first element in the list, in the case of an Array.
 
 ```lisp
-[de get-json-array (Value)
+[de make-json-array (Value)
   (when (=T (car Value)) (make-array (cdr Value))) ]
 ```
 
