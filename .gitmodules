@@ -1,7 +1,0 @@
-[submodule "vendor/parson"]
-	path = vendor/parson
-	url = https://github.com/kgabis/parson.git
-	ignore = dirty
-[submodule "vendor/picolisp-unit"]
-	path = vendor/picolisp-unit
-	url = https://github.com/aw/picolisp-unit.git
