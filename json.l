@@ -10,7 +10,7 @@
 (local json-parse-file json-parse-string json-value-init-object json-type json-array json-object json-string json-number)
 (local json-array-get-count json-object-get-count json-array-get-value json-object-get-value json-object-get-name json-value-free)
 (local link-json-array link-json-object iterate-object iterate-list get-null get-boolean get-json-number get-json-string get-json-array)
-(local make-object make-array make-something)
+(local make-object make-array)
 
 (load (pack (car (file)) "module.l"))
 
@@ -128,17 +128,21 @@
   (when (=T (car Value)) (make-array (cdr Value))) ]
 
 [de make-object (Value)
-  (make-something '("{" . "}")
-                  '(pack "\"" (car N) "\":" (iterate-list N)) ]
+  (pack "{"
+        (glue ","
+              (mapcar
+                '((N) (pack "\"" (car N) "\":" (iterate-list N)))
+                Value ) )
+        "}" ]
 
 [de make-array (Value)
-  (make-something '("[" . "]")
-                  '(iterate-list (cons NIL N)) ]
+  (pack "["
+        (glue ","
+              (mapcar
+                '((N) (iterate-list (cons NIL N)))
+                Value ) )
+        "]" ]
 
-[de make-something (Pair Rule)
-  (pack (car Pair)
-        (glue "," (mapcar '((N) (eval Rule)) Value))
-        (cdr Pair) ]
 
 # public
 [de decode (Value Type)
