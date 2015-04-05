@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.2 (2015-04-05)
+
+  * Update picolisp-unit to v0.6.0
+
 ## 0.4.1 (2015-04-05)
 
   * Refactor 'json-boolean call
