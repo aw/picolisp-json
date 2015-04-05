@@ -125,9 +125,7 @@ We'll first look at the `(iterate-object)` function. This is a recursive functio
       (case Type  (`*JSONArray    (link-json-array  Value))
                   (`*JSONObject   (link-json-object Value))
                   (`*JSONString   (chain (json-ffi 'json-string  Value)))
-                  [`*JSONBoolean  (chain (cond
-                                            ((= 1 (json-ffi 'json-boolean Value)) 'true)
-                                            ((= 0 (json-ffi 'json-boolean Value)) 'false) ]
+                  [`*JSONBoolean  (chain (case (json-ffi 'json-boolean Value) (1 'true) (0 'false) ]
                   (`*JSONNumber   (chain (json-ffi 'json-number  Value)))
                   (`*JSONNull     (chain 'null)) ]
 ```

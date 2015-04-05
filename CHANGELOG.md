@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1 (2015-04-05)
+
+  * Refactor 'json-boolean call
+
 ## 0.4.0 (2015-04-04)
 
   * Add requires to module.l

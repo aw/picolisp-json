@@ -1,6 +1,6 @@
 [de MODULE_INFO
   ("name"       "json")
-  ("version"    "0.4.0")
+  ("version"    "0.4.1")
   ("summary"    "JSON encoder/decoder ffi-bindings for PicoLisp")
   ("source"     "https://github.com/aw/picolisp-json.git")
   ("author"     "Alexander Williams")
