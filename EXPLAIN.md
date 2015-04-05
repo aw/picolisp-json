@@ -63,7 +63,7 @@ When working with a native C library in PicoLisp, it's important to use the same
 Example:
 
 ```lisp
-(json-ffi 'json-type (json-ffi 'json-parse-string "{\"Hello\":\"World\"}"))
+(ffi 'json-type (ffi 'json-parse-string "{\"Hello\":\"World\"}"))
 -> 4
 ```
 
@@ -78,7 +78,7 @@ Inspired by the amazing ["Paradigms of Artificial Intelligence"](http://norvig.c
 First we create a simple list which declares all the ffi functions and their result type:
 
 ```lisp
-[de json-ffi-table
+[de ffi-table
   (json-parse-file          'N)
   (json-parse-string        'N)
   (json-value-init-object   'N)
@@ -90,12 +90,12 @@ First we create a simple list which declares all the ffi functions and their res
 We then use a function which maps the first argument `Function` to a name in the list:
 
 ```lisp
-[de json-ffi (Function . @)
-  (let Rule (assoc Function json-ffi-table)
+[de ffi (Function . @)
+  (let Rule (assoc Function ffi-table)
     (pass native `*Json (chop-ffi (car Rule)) (eval (cadr Rule) ]
 ```
 
-The `(json-ffi)` function calls `(native)` using [pass](http://software-lab.de/doc/refP.html#pass), to append the rest of the variable-length arguments in `@` at the end of the function.
+The `(ffi)` function calls `(native)` using [pass](http://software-lab.de/doc/refP.html#pass), to append the rest of the variable-length arguments in `@` at the end of the function.
 
 You'll notice `(chop-ffi)` actually converts the `-` characters to `_`. This is necessary because the C function names have underscores instead of dashes, but in general I think the LISP world prefers dashes for function names.
 
@@ -104,7 +104,7 @@ You'll notice `(chop-ffi)` actually converts the `-` characters to `_`. This is 
   (glue "_" (split (chop Name) "-") ]
 ```
 
-I think this is a very lispy approach. It allows us to easily add new native functions by simply adding to the `json-ffi-table`. No other code modifications are necessary.
+I think this is a very lispy approach. It allows us to easily add new native functions by simply adding to the `ffi-table`. No other code modifications are necessary.
 
 # Internal functions
 
@@ -121,12 +121,12 @@ We'll first look at the `(iterate-object)` function. This is a recursive functio
 ```lisp
 [de iterate-object (Value)
   (make
-    (let Type (json-ffi 'json-type Value)
-      (case Type  (`*JSONArray    (link-json-array  Value))
-                  (`*JSONObject   (link-json-object Value))
-                  (`*JSONString   (chain (json-ffi 'json-string  Value)))
-                  [`*JSONBoolean  (chain (case (json-ffi 'json-boolean Value) (1 'true) (0 'false) ]
-                  (`*JSONNumber   (chain (json-ffi 'json-number  Value)))
+    (let Type (ffi 'json-type Value)
+      (case Type  (`*JSONArray    (link-array  Value))
+                  (`*JSONObject   (link-object Value))
+                  (`*JSONString   (chain (ffi 'json-string  Value)))
+                  [`*JSONBoolean  (chain (case (ffi 'json-boolean Value) (1 'true) (0 'false) ]
+                  (`*JSONNumber   (chain (ffi 'json-number  Value)))
                   (`*JSONNull     (chain 'null)) ]
 ```
 
@@ -142,16 +142,16 @@ We use [case](http://software-lab.de/doc/refC.html#case) here as our switch stat
 
 JSON Arrays and Objects are a bit more tricky to parse, so we'll get to those later. In the case of `String, Boolean, Number or Null`, we add them to the list using `(chain)`.
 
-### (link-json-array)
+### (link-array)
 
 When the value is an Array (`Type = 5 = *JSONArray`), we loop through it to build a list (arrays are mapped as lists).
 
 ```lisp
-[de link-json-array (Value)
-  (let Arr (json-ffi 'json-array Value)
+[de link-array (Value)
+  (let Arr (ffi 'json-array Value)
     (link T)
-    (for N (json-ffi 'json-array-get-count Arr)
-      (let Val (json-ffi 'json-array-get-value Arr (dec N))
+    (for N (ffi 'json-array-get-count Arr)
+      (let Val (ffi 'json-array-get-value Arr (dec N))
         (link (iterate-object Val)) ]
 ```
 
@@ -166,22 +166,22 @@ Example:
 ```
 for N 5
   N = 1
-  (json-ffi 'json-array-get-value Arr 0)
+  (ffi 'json-array-get-value Arr 0)
   ..
   N = 2
-  (json-ffi 'json-array-get-value Arr 1)
+  (ffi 'json-array-get-value Arr 1)
   ..
 ```
 
-Finally, the `(link)` function makes a call to `(iterate-object)`. Remember earlier? when `(link-json-array)` was called within `(iterate-object)`?
+Finally, the `(link)` function makes a call to `(iterate-object)`. Remember earlier? when `(link-array)` was called within `(iterate-object)`?
 
 **Note:** This is called recursion, where a function calls itself (in our case, with a different value). You can [ask Google](https://encrypted.google.com/search?hl=en&q=recursion) about it.
 
 The reason we perform this recursion is in case the value in the array is itself an array or an object. The `(iterate-object)` function will simply return a string, boolean, number or null otherwise.
 
-### (link-json-object)
+### (link-object)
 
-The `(link-json-object)` is similar to `(link-json-array)` except, you guessed it, it loops over objects.
+The `(link-object)` is similar to `(link-array)` except, you guessed it, it loops over objects.
 
 ```lisp
 ..
