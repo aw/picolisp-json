@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.1 (2015-04-08)
+
+  * Ensure module.l requires the correct versions
+
 ## 0.5.0 (2015-04-05)
 
   * Rename some internal functions

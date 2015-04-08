@@ -9,5 +9,5 @@
   ("install"    "build.sh")
   ("update"     "update.sh")
   ("requires"
-    ("picolisp-unit"    "v0.5.2"    "https://github.com/aw/picolisp-unit.git")
+    ("picolisp-unit"    "v0.6.0"    "https://github.com/aw/picolisp-unit.git")
     ("parson"           "master"    "https://github.com/kgabis/parson.git") ]
