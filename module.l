@@ -1,6 +1,6 @@
 [de MODULE_INFO
   ("name"       "json")
-  ("version"    "0.5.0")
+  ("version"    "0.5.2")
   ("summary"    "JSON encoder/decoder ffi-bindings for PicoLisp")
   ("source"     "https://github.com/aw/picolisp-json.git")
   ("author"     "Alexander Williams")
@@ -9,5 +9,5 @@
   ("install"    "build.sh")
   ("update"     "update.sh")
   ("requires"
-    ("picolisp-unit"    "v0.6.0"    "https://github.com/aw/picolisp-unit.git")
+    ("picolisp-unit"    "v0.6.1"    "https://github.com/aw/picolisp-unit.git")
     ("parson"           "master"    "https://github.com/kgabis/parson.git") ]

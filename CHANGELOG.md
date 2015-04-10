@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.2 (2015-04-10)
+
+  * Run travis-ci tests in docker container
+  * Update picolisp-unit to v0.6.1
+
 ## 0.5.1 (2015-04-08)
 
   * Ensure module.l requires the correct versions
