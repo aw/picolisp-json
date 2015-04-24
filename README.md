@@ -65,7 +65,7 @@ Only the following functions are exported publicly, and namespaced with `(symbol
 | String | String | `"hello" <-> "hello"` |
 | Null | Transient _null_ Symbol | `null <-> 'null` |
 | Boolean | Transient _true_ or _false_ Symbol | `true <-> 'true` |
-| Array | List with T in cdar | `{"array":[1,2,3]} <-> '("array" T 1 2 3)` |
+| Array | List with T in cdar | `{"array":[1,2,3]} <-> '(("array" T 1 2 3))` |
 | Object | Cons pair | `{"hello":"world"} <-> '(("hello" . "world"))` |
 
 ### Notes
