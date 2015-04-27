@@ -25,9 +25,9 @@ Please read [EXPLAIN.md](EXPLAIN.md) to learn more about PicoLisp and this JSON 
 
 # Getting Started
 
-These FFI bindings require the [Parson C library](https://github.com/kgabis/parson), compiled as a shared library. It is included here as a [git submodule](http://git-scm.com/book/en/v2/Git-Tools-Submodules).
+These FFI bindings require the [Parson C library](https://github.com/kgabis/parson), compiled as a shared library.
 
-  1. Type `./build.sh` to pull and compile the _Parson C Library_.
+  1. Type `make` to pull and compile the _Parson C Library_.
   2. Include `json.l` in your project
   3. Try the [examples](#examples) below
 
@@ -35,15 +35,15 @@ These FFI bindings require the [Parson C library](https://github.com/kgabis/pars
 
 Once compiled, the shared library is symlinked as:
 
-    lib/libparson.so -> vendor/parson/libparson.so
+    .lib/libparson.so -> .modules/parson/HEAD/libparson.so
 
-The `json.l` file searches for `lib/libparson.so`, relative to its current directory.
+The `json.l` file searches for `.lib/libparson.so`, relative to its current directory.
 
 ### Updating
 
-This library uses git submodules, type this keep everything updated:
+To keep everything updated, type:
 
-    ./update.sh
+    make update
 
 # Usage
 
@@ -133,9 +133,9 @@ pil +
 
 # Testing
 
-This library now comes with full [unit tests](https://github.com/aw/picolisp-unit). To run the tests, run:
+This library now comes with full [unit tests](https://github.com/aw/picolisp-unit). To run the tests, type:
 
-    ./test.l
+    make check
 
 # Alternatives
 
