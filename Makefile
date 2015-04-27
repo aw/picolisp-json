@@ -1,11 +1,11 @@
 # picolisp-json Makefile
 
-MODULE_DIR ?= .modules
-SYMLINK_DIR ?= .lib
+PIL_MODULE_DIR ?= .modules
+PIL_SYMLINK_DIR ?= .lib
 
 ## Edit below
 BUILD_REPO = https://github.com/kgabis/parson.git
-BUILD_DIR = $(MODULE_DIR)/parson/HEAD
+BUILD_DIR = $(PIL_MODULE_DIR)/parson/HEAD
 TARGET = libparson.so
 FILES = parson.c
 CFLAGS = -O2 -g -Wall -Wextra -std=c89 -pedantic-errors -fPIC -shared
@@ -13,7 +13,7 @@ CFLAGS = -O2 -g -Wall -Wextra -std=c89 -pedantic-errors -fPIC -shared
 
 # Unit testing
 TEST_REPO = https://github.com/aw/picolisp-unit.git
-TEST_DIR = $(MODULE_DIR)/picolisp-unit/HEAD
+TEST_DIR = $(PIL_MODULE_DIR)/picolisp-unit/HEAD
 
 # Generic
 CC = gcc
@@ -40,8 +40,8 @@ $(BUILD_DIR)/$(TARGET):
 		strip --strip-unneeded $(TARGET)
 
 symlink:
-		mkdir -p $(SYMLINK_DIR) && \
-		cd $(SYMLINK_DIR) && \
+		mkdir -p $(PIL_SYMLINK_DIR) && \
+		cd $(PIL_SYMLINK_DIR) && \
 		ln -sf ../$(BUILD_DIR)/$(TARGET) $(TARGET)
 
 check: all $(TEST_DIR) run-tests
@@ -53,5 +53,5 @@ clean:
 		cd $(BUILD_DIR) && \
 		rm -f $(TARGET) && \
 		cd - && \
-		cd $(SYMLINK_DIR) && \
+		cd $(PIL_SYMLINK_DIR) && \
 		rm -f $(TARGET)
