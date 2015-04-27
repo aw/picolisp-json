@@ -43,7 +43,7 @@ The `json.l` file searches for `.lib/libparson.so`, relative to its current dire
 
 To keep everything updated, type:
 
-    make update
+    git pull && make clean && make
 
 # Usage
 
