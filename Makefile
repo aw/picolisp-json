@@ -36,13 +36,13 @@ $(TEST_DIR):
 
 $(BUILD_DIR)/$(TARGET):
 		cd $(BUILD_DIR) && \
-			$(COMPILE) $(SHARED) -o $(TARGET) $(FILES) && \
-			strip --strip-unneeded $(TARGET)
+		$(COMPILE) $(SHARED) -o $(TARGET) $(FILES) && \
+		strip --strip-unneeded $(TARGET)
 
 symlink:
 		mkdir -p $(SYMLINK_DIR) && \
-			cd $(SYMLINK_DIR) && \
-			ln -sf ../$(BUILD_DIR)/$(TARGET) $(TARGET)
+		cd $(SYMLINK_DIR) && \
+		ln -sf ../$(BUILD_DIR)/$(TARGET) $(TARGET)
 
 check: all $(TEST_DIR) run-tests
 
@@ -51,7 +51,7 @@ run-tests:
 
 clean:
 		cd $(BUILD_DIR) && \
-			rm -f $(TARGET) && \
-			cd - && \
-			cd $(SYMLINK_DIR) && \
-			rm -f $(TARGET)
+		rm -f $(TARGET) && \
+		cd - && \
+		cd $(SYMLINK_DIR) && \
+		rm -f $(TARGET)
