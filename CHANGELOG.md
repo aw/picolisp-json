@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.1 (2015-04-28)
+
+  * Fix bug in make-json-string.
+
 ## 0.6.0 (2015-04-28)
 
   * Remove the need for git submodules

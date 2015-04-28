@@ -100,7 +100,7 @@
   (when (num? Value) Value) ]
 
 [de make-json-string (Value)
-  (when (str? Value) (pack "\"" Value "\"")) ]
+  (when (str? Value) (sym Value) ]
 
 [de make-json-array (Value)
   (when (=T (car Value)) (make-array (cdr Value))) ]
