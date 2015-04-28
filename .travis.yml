@@ -3,10 +3,11 @@ sudo: false
 cache: apt
 
 before_script:
-  - ./build.sh
+  - make
   - wget http://software-lab.de/picoLisp-3.1.9.tgz -O /tmp/picolisp.tgz
   - cd /tmp; tar -xf /tmp/picolisp.tgz
   - cd /tmp/picoLisp/src64 && make
 
 script:
-  - cd ${TRAVIS_BUILD_DIR} && /tmp/picoLisp/pil test.l
+  - export PATH=$PATH:/tmp/picoLisp
+  - cd ${TRAVIS_BUILD_DIR} && make check

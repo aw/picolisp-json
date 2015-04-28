@@ -15,7 +15,7 @@
 (load (pack (car (file)) "module.l"))
 
 (setq
-  *Native       (pack (car (file)) "lib/libparson.so")
+  *Native       (pack (car (file)) ".lib/libparson.so")
 
   *JSONError    -1
   *JSONNull     1

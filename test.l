@@ -1,6 +1,6 @@
 #!/usr/bin/env pil
 
-(load "vendor/picolisp-unit/unit.l")
+(load ".modules/picolisp-unit/HEAD/unit.l")
 
 (chdir "test/"
   (mapcar load (filter '((N) (sub? "test_" N)) (dir "."))) )
