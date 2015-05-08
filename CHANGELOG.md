@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.2 (2015-05-08)
+
+  * Specify explicit git ref for 'parson' library
+
 ## 0.6.1 (2015-04-28)
 
   * Fix bug in make-json-string.

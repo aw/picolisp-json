@@ -6,6 +6,7 @@ PIL_SYMLINK_DIR ?= .lib
 ## Edit below
 BUILD_REPO = https://github.com/kgabis/parson.git
 BUILD_DIR = $(PIL_MODULE_DIR)/parson/HEAD
+BUILD_REF = 7fd8dc1c4c
 TARGET = libparson.so
 FILES = parson.c
 CFLAGS = -O2 -g -Wall -Wextra -std=c89 -pedantic-errors -fPIC -shared
@@ -36,6 +37,7 @@ $(TEST_DIR):
 
 $(BUILD_DIR)/$(TARGET):
 		cd $(BUILD_DIR) && \
+		git checkout $(BUILD_REF) && \
 		$(COMPILE) $(SHARED) -o $(TARGET) $(FILES) && \
 		strip --strip-unneeded $(TARGET)
 
