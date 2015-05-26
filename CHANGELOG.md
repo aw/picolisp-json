@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.3 (2015-05-26)
+
+  * Update picolisp-unit to v0.6.2
+
 ## 0.6.2 (2015-05-08)
 
   * Specify explicit git ref for 'parson' library
