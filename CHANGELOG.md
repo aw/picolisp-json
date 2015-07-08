@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0 (2015-07-08)
+
+  * Update install paths in Makefile
+  * Update 'parson' dependency version
+
 ## 1.0.0 (2015-06-09)
 
   * Production release
