@@ -2,15 +2,16 @@
 #
 # The MIT License (MIT)
 #
-# Copyright (c) 2015 Alexander Williams, Unscramble <license@unscramble.jp>
+# Copyright (c) 2017 Alexander Williams, Unscramble <license@unscramble.jp>
 
-(symbols 'json 'pico)
+(unless (sys "PIL_NO_NAMESPACES")
+  (symbols 'json 'pico)
 
-(local MODULE_INFO *Native *JSONError *JSONNull *JSONString *JSONNumber)
-(local *JSONObject *JSONArray *JSONBoolean *JSONSuccess *JSONFailure)
-(local ffi-table chop-ffi ffi link-array link-object)
-(local iterate-object iterate-list make-null make-boolean make-json-number)
-(local make-json-string make-json-array make-object make-array)
+  (local MODULE_INFO *Native *JSONError *JSONNull *JSONString *JSONNumber)
+  (local *JSONObject *JSONArray *JSONBoolean *JSONSuccess *JSONFailure)
+  (local ffi-table chop-ffi ffi link-array link-object)
+  (local iterate-object iterate-list make-null make-boolean make-json-number)
+  (local make-json-string make-json-array make-object make-array) )
 
 (load (pack (car (file)) "module.l"))
 
@@ -90,11 +91,11 @@
       (make-object Value) ]
 
 [de make-null (Value)
-  (when (== 'null Value) "null") ]
+  (when (= 'null Value) "null") ]
 
 [de make-boolean (Value)
-  (cond ((== 'true Value)  "true")
-        ((== 'false Value) "false") ]
+  (cond ((= 'true Value)  "true")
+        ((= 'false Value) "false") ]
 
 [de make-json-number (Value)
   (when (num? Value) Value) ]

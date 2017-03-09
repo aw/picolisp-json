@@ -1,8 +1,11 @@
 #!/usr/bin/env pil
 
-(load ".modules/picolisp-unit/HEAD/unit.l")
+(unless (sys "PIL_NO_NAMESPACES")
+  (when symbols (symbols 'unit 'pico)) )
+
+(load (pack (car (file)) ".modules/picolisp-unit/HEAD/unit.l"))
 
 (chdir "test/"
   (mapcar load (filter '((N) (sub? "test_" N)) (dir "."))) )
 
-(unit~report)
+(report)

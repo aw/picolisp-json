@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0 (2017-03-09)
+
+  * Remove the use of PicoLisp namespaces (functionally equivalent to 1.1.0)
+
 ## 1.1.0 (2015-07-08)
 
   * Update install paths in Makefile

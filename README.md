@@ -1,6 +1,6 @@
 # JSON Encoder/Decoder for PicoLisp
 
-[![GitHub release](https://img.shields.io/github/release/aw/picolisp-json.svg)](https://github.com/aw/picolisp-json) [![Build Status](https://travis-ci.org/aw/picolisp-json.svg?branch=master)](https://travis-ci.org/aw/picolisp-json) [![Dependency](https://img.shields.io/badge/[deps] Parson-18761d99ff-ff69b4.svg)](https://github.com/aw/parson) [![Dependency](https://img.shields.io/badge/[deps] picolisp--unit-v1.0.0-ff69b4.svg)](https://github.com/aw/picolisp-unit.git)
+[![GitHub release](https://img.shields.io/github/release/aw/picolisp-json.svg)](https://github.com/aw/picolisp-json) [![Build Status](https://travis-ci.org/aw/picolisp-json.svg?branch=master)](https://travis-ci.org/aw/picolisp-json) [![Dependency](https://img.shields.io/badge/[deps] Parson-18761d99ff-ff69b4.svg)](https://github.com/aw/parson) [![Dependency](https://img.shields.io/badge/[deps] picolisp--unit-v2.0.0-ff69b4.svg)](https://github.com/aw/picolisp-unit.git)
 
 This library can be used to parse and serialize (encode/decode) JSON strings in [PicoLisp](http://picolisp.com/).
 
@@ -20,6 +20,7 @@ Please read [EXPLAIN.md](EXPLAIN.md) to learn more about PicoLisp and this JSON 
 # Requirements
 
   * PicoLisp 64-bit v3.1.9+
+  * Tested up to PicoLisp v16.12
   * Git
   * UNIX/Linux development/build tools (gcc, make/gmake, etc..)
 
@@ -46,6 +47,8 @@ To keep everything updated, type:
     git pull && make clean && make
 
 # Usage
+
+> **Note:** Namespaces can be disabled by setting the environment variable `PIL_NO_NAMESPACES=true`
 
 Only the following functions are exported publicly, and namespaced with `(symbols 'json)` (or the prefix: `json~`):
 
@@ -154,4 +157,4 @@ If you want to improve this library, please make a pull-request.
 
 [MIT License](LICENSE)
 
-Copyright (c) 2015 Alexander Williams, Unscramble <license@unscramble.jp>
+Copyright (c) 2017 Alexander Williams, Unscramble <license@unscramble.jp>

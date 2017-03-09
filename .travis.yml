@@ -4,7 +4,7 @@ cache: apt
 
 before_script:
   - make
-  - wget http://software-lab.de/picoLisp-16.6.tgz -O /tmp/picolisp.tgz
+  - wget http://software-lab.de/picoLisp-16.12.tgz -O /tmp/picolisp.tgz
   - cd /tmp; tar -xf /tmp/picolisp.tgz
   - cd /tmp/picoLisp/src64 && make
 
