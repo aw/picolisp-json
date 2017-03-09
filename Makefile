@@ -7,7 +7,7 @@ REPO_PREFIX ?= https://github.com/aw
 ## Edit below
 BUILD_REPO = $(REPO_PREFIX)/parson.git
 BUILD_DIR = $(PIL_MODULE_DIR)/parson/HEAD
-BUILD_REF = 18761d99ff
+BUILD_REF = ba2a854
 TARGET = libparson.so
 FILES = parson.c
 CFLAGS = -O2 -g -Wall -Wextra -std=c89 -pedantic-errors -fPIC -shared

@@ -9,4 +9,4 @@
   ("install"    "make")
   ("requires"
     ("picolisp-unit"    "v2.0.0"        "https://github.com/aw/picolisp-unit.git")
-    ("parson"           "18761d99ff"    "https://github.com/aw/parson.git") ]
+    ("parson"           "ba2a854"       "https://github.com/aw/parson.git") ]
