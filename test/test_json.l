@@ -2,7 +2,7 @@
 
 (prinl "^J  Testing JSON encoder/decoder for PicoLisp^J")
 
-(unless (sys "PIL_NO_NAMESPACES")
+(unless (= "false" (sys "PIL_NAMESPACES"))
   (symbols 'json) )
 
 (setq

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.0 (2017-03-23)
+
+  * Restore PicoLisp namespaces for backwards compatibility. Disable with PIL_NAMESPACES=false
+
 ## 2.1.0 (2017-03-14)
 
   * Update 'parson' dependency version

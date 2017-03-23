@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2017 Alexander Williams, Unscramble <license@unscramble.jp>
 
-(unless (sys "PIL_NO_NAMESPACES")
+(unless (= "false" (sys "PIL_NAMESPACES"))
   (symbols 'json 'pico)
 
   (local MODULE_INFO *Native *JSONError *JSONNull *JSONString *JSONNumber)

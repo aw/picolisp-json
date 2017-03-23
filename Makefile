@@ -16,7 +16,7 @@ CFLAGS = -O2 -g -Wall -Wextra -std=c89 -pedantic-errors -fPIC -shared
 # Unit testing
 TEST_REPO = $(REPO_PREFIX)/picolisp-unit.git
 TEST_DIR = $(PIL_MODULE_DIR)/picolisp-unit/HEAD
-TEST_REF = v2.0.0
+TEST_REF = v2.1.0
 
 # Generic
 CC = gcc
@@ -53,7 +53,7 @@ symlink:
 check: all $(TEST_DIR) run-tests
 
 run-tests:
-		PIL_NO_NAMESPACES=true ./test.l
+		./test.l
 
 clean:
 		cd $(BUILD_DIR) && \
