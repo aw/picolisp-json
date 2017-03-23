@@ -53,7 +53,7 @@ symlink:
 check: all $(TEST_DIR) run-tests
 
 run-tests:
-		./test.l
+		PIL_NAMESPACES=false ./test.l
 
 clean:
 		cd $(BUILD_DIR) && \
