@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.0 (2018-01-08)
+
+  * Re-implement JSON decoding in pure PicoLisp
+  * Remove ffi-bindings (C parson) library
+  * [breaking] Errors are sent to STDERR instead of being suppressed
+
 ## 2.2.0 (2017-03-23)
 
   * Restore PicoLisp namespaces for backwards compatibility. Disable with PIL_NAMESPACES=false

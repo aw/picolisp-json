@@ -1,8 +1,8 @@
 # JSON Encoder/Decoder for PicoLisp
 
-[![GitHub release](https://img.shields.io/github/release/aw/picolisp-json.svg)](https://github.com/aw/picolisp-json) [![Build Status](https://travis-ci.org/aw/picolisp-json.svg?branch=master)](https://travis-ci.org/aw/picolisp-json) [![Dependency](https://img.shields.io/badge/[deps]&#32;parson-20ad63f-ff69b4.svg)](https://github.com/aw/parson) [![Dependency](https://img.shields.io/badge/[deps]&#32;picolisp--unit-v2.1.0-ff69b4.svg)](https://github.com/aw/picolisp-unit.git)
+[![GitHub release](https://img.shields.io/github/release/aw/picolisp-json.svg)](https://github.com/aw/picolisp-json) [![Build Status](https://travis-ci.org/aw/picolisp-json.svg?branch=master)](https://travis-ci.org/aw/picolisp-json) [![Dependency](https://img.shields.io/badge/[deps]&#32;picolisp--unit-v2.1.0-ff69b4.svg)](https://github.com/aw/picolisp-unit.git)
 
-This library can be used to parse and serialize (encode/decode) JSON strings in [PicoLisp](http://picolisp.com/).
+This library can be used to parse and serialize (encode/decode) JSON strings in pure [PicoLisp](http://picolisp.com/).
 
 ![picolisp-json](https://cloud.githubusercontent.com/assets/153401/6571543/56e31e44-c701-11e4-99f0-c2c51fd8061b.png)
 
@@ -20,31 +20,16 @@ Please read [EXPLAIN.md](EXPLAIN.md) to learn more about PicoLisp and this JSON 
 # Requirements
 
   * PicoLisp 64-bit v3.1.9+
-  * Tested up to PicoLisp v16.12
-  * Git
-  * UNIX/Linux development/build tools (gcc, make/gmake, etc..)
+  * Tested up to PicoLisp v17.12
 
 # Getting Started
 
-These FFI bindings require the [Parson C library](https://github.com/kgabis/parson), compiled as a shared library.
+This library has been rewritten in pure PicoLisp and contains **no external dependencies**.
 
-  1. Type `make` to pull and compile the _Parson C Library_.
-  2. Include `json.l` in your project
-  3. Try the [examples](#examples) below
+~~These FFI bindings require the [Parson C library](https://github.com/kgabis/parson), compiled as a shared library~~
 
-### Linking and Paths
-
-Once compiled, the shared library is symlinked as:
-
-    .lib/libparson.so -> .modules/parson/HEAD/libparson.so
-
-The `json.l` file searches for `.lib/libparson.so`, relative to its current directory.
-
-### Updating
-
-To keep everything updated, type:
-
-    git pull && make clean && make
+  1. Include `json.l` in your project
+  2. Try the [examples](#examples) below
 
 # Usage
 
@@ -73,21 +58,24 @@ Only the following functions are exported publicly, and namespaced with `(symbol
 
 ### Notes
 
-  * A successful result will return a list. Failures return `NIL`.
+  * A successful result will return a list. Failures return `NIL` and print the error message to `STDERR` (standard error).
   * Keys are in `car`, values are in `cdr`.
   * When the 2nd item in the list is `T`, the rest of the list represents a JSON array.
   * When the 2nd item in the list is a cons pair, it represents a JSON object.
+  * Supports Unicode characters as `"\uNNNN"` where `N` is a hexadecimal digit.
+
+### JSON Specification
+
+This library conforms to the [ECMA-404 The JSON Data Interchange Standard](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf), except for the following semantic exceptions:
+
+  * [Numbers] Scientific (floating point, fractional, exponential) numbers (ex: `3.7e-5`) are not accepted. They must be provided as strings (ex: `"3.7e-5"`).
 
 # Examples
 
 ### (decode String)
 
-```lisp
-pil +
-
+```picolisp
 (load "json.l")
-
-(symbols 'json)
 
 (decode "{\"Hello\":\"World\"}")
 
@@ -99,12 +87,8 @@ pil +
 The same function is used for parsing JSON strings and files.
 Simply append `T` as the last argument if you want to parse a file.
 
-```lisp
-pil +
-
+```picolisp
 (load "json.l")
-
-(symbols 'json)
 
 (decode "test.json" T)
 
@@ -121,28 +105,33 @@ pil +
 
 ### (encode List)
 
-```lisp
-
-pil +
-
+```picolisp
 (load "json.l")
-
-(symbols 'json)
 
 (encode '(("Hello" . "World")))
 
 -> "{\"Hello\":\"World\"}"
 ```
 
+### (decode InvalidString)
+
+```picolisp
+
+(decode "{\"Hello\":invalid}")
+"Invalid Object 'invalid', must be '[' OR '{' OR string OR number OR true OR false OR null"
+
+-> NIL
+```
+
 # Testing
 
-This library now comes with full [unit tests](https://github.com/aw/picolisp-unit). To run the tests, type:
+This library comes with full [unit tests](https://github.com/aw/picolisp-unit). To run the tests, type:
 
     make check
 
 # Alternatives
 
-The following are alternatives written in pure PicoLisp. They are limited by pipe/read syscalls.
+The following are alternatives also written in pure PicoLisp. They are limited by pipe/read syscalls.
 
 * [JSON reader/writer](http://rosettacode.org/wiki/JSON#PicoLisp) by Alexander Burger.
 * [JSON reader/writer](https://bitbucket.org/hsarvell/ext/src/9d6e5a15c5ce7cb47033e0082ef70aee6c4c8dd7/json.l?at=default) by Henrik Sarvell.
@@ -157,4 +146,4 @@ If you want to improve this library, please make a pull-request.
 
 [MIT License](LICENSE)
 
-Copyright (c) 2017 Alexander Williams, Unscramble <license@unscramble.jp>
+Copyright (c) 2017-2018 Alexander Williams, Unscramble <license@unscramble.jp>

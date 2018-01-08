@@ -2,6 +2,8 @@
 
 This document provides a short walkthrough of the source code for the [PicoLisp-JSON](https://github.com/aw/picolisp-json.git) encoder/decoder.
 
+**Note:** This document is outdated and only valid for [picolisp-json v2.x](https://github.com/aw/picolisp-json/tree/v2.2.0) or older.
+
 It's split into a few sections for easier reading:
 
 1. [Global variables](#global-variables): Important variables used throughout the library.

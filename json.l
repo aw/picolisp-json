@@ -2,83 +2,109 @@
 #
 # The MIT License (MIT)
 #
-# Copyright (c) 2017 Alexander Williams, Unscramble <license@unscramble.jp>
+# Copyright (c) 2017-2018 Alexander Williams, Unscramble <license@unscramble.jp>
 
 (unless (= "false" (sys "PIL_NAMESPACES"))
   (symbols 'json 'pico)
 
-  (local MODULE_INFO *Native *JSONError *JSONNull *JSONString *JSONNumber)
-  (local *JSONObject *JSONArray *JSONBoolean *JSONSuccess *JSONFailure)
-  (local ffi-table chop-ffi ffi link-array link-object)
+  (local MODULE_INFO *Msg)
+  (local json-parse-file json-parse-string json-count-brackets)
+  (local json-check-value json-object-get-name json-object-get-value)
+  (local link-array link-object)
   (local iterate-object iterate-list make-null make-boolean make-json-number)
   (local make-json-string make-json-array make-object make-array) )
 
 (load (pack (car (file)) "module.l"))
 
-(setq
-  *Native       (pack (car (file)) ".lib/libparson.so")
+# send error message to STDERR
+[de err-throw (Error)
+  (msg Error)
+  (throw 'invalid-json NIL) ]
 
-  *JSONError    -1
-  *JSONNull     1
-  *JSONString   2
-  *JSONNumber   3
-  *JSONObject   4
-  *JSONArray    5
-  *JSONBoolean  6
-  *JSONSuccess  0
-  *JSONFailure  -1 )
+# json
+[de json-parse-file (File)
+  (json-parse-string (in File (till NIL T) ]
 
+[de json-parse-string (Value)
+  (let Str (str (json-parse-unicode (chop Value)) "_")
+    (json-count-brackets Str)
+    Str ]
 
-# ffi-bindings
-[de ffi-table
-  (json-parse-file          'N)
-  (json-parse-string        'N)
-  (json-value-init-object   'N)
-  (json-type                'I)
-  (json-array               'N)
-  (json-object              'N)
-  (json-string              'S)
-  (json-boolean             'I)
-  (json-number              '+1.0)
-  (json-array-get-count     'I)
-  (json-object-get-count    'I)
-  (json-array-get-value     'N)
-  (json-object-get-value    'N)
-  (json-object-get-name     'S)
-  (json-value-free          NIL) ]
+[de json-parse-unicode (Value)
+  (pack
+    (make
+      (while Value
+        (let R (pop 'Value)
+          (cond
+            [(and (= "\\" R) (= "u" (car Value))) (let U (cut 5 'Value) (link (char (hex (pack (tail 4 U) ] # \uNNNN hex
+            [(and (= "\\" R) (= "b" (car Value))) (pop 'Value) (link (char (hex "08") ] # \b backspace
+            [(and (= "\\" R) (= "f" (car Value))) (pop 'Value) (link (char (hex "0C") ] # \f formfeed
+            (T (link R)) ]
 
-[de chop-ffi (Name)
-  (glue "_" (split (chop Name) "-") ]
+[de json-count-brackets (Str)
+  (use *Json_stack
+    (off *Json_stack)
+    (mapc '((N)
+            (if (or (= "{" N) (= "[" N))
+                (push '*Json_stack N)
+                (case N
+                  ("]" (let R (pop '*Json_stack) (unless (= "[" R) (err-throw "Unmatched JSON brackets '['"))))
+                  ("}" (let R (pop '*Json_stack) (unless (= "{" R) (err-throw "Unmatched JSON brackets '{'")))) ) ) )
+            Str )
+    (when *Json_stack (err-throw (text "Unmatched JSON brackets '@1'", (pop *Json_stack) ]
 
-[de ffi (Function . @)
-  (let Rule (assoc Function ffi-table)
-    (pass native `*Native (chop-ffi (car Rule)) (eval (cadr Rule) ]
+[de json-check-value (Value)
+  (or
+    (= "," Value)
+    (= "{" Value)
+    (= "[" Value)
+    (= "]" Value)
+    (lst? Value)
+    (num? Value)
+    (= 'true Value)
+    (= 'false Value)
+    (= 'null Value)
+    (err-throw (text "Invalid Array value '@1', must be ',' OR '{' OR '[' OR ']' OR string OR number OR true OR false OR null", Value) ]
 
+[de json-object-get-name (Obj)
+  (cond
+    ((lst? Obj)   (pack Obj))
+    ((= "}" Obj)  NIL)
+    (T (err-throw (text "Invalid Object name '@1', must be '}' OR string", Obj) ]
+
+[de json-object-get-value (Obj Value)
+  (cond
+    ((= ":" Obj) Value)
+    ((= "]" Obj) NIL)
+    (T (err-throw (text "Invalid Object value '@1', must be ':' OR ']'", Obj) ]
 
 # internal
-[de link-array (Value)
-  (let Arr (ffi 'json-array Value)
-    (link T)
-    (for N (ffi 'json-array-get-count Arr)
-      (let Val (ffi 'json-array-get-value Arr (dec N))
-        (link (iterate-object Val)) ]
+[de link-array ()
+  (link (iterate-object))
+  (let Res (pop '*Json)
+    (case Res
+      ("," (json-check-value (car *Json)) (link-array)) ]
 
-[de link-object (Value)
-  (let Obj (ffi 'json-object Value)
-    (for N (ffi 'json-object-get-count Obj)
-      (let (Name (ffi 'json-object-get-name Obj (dec N))
-            Val  (ffi 'json-object-get-value Obj Name) )
-        (link (cons Name (iterate-object Val))) ]
+[de link-object ()
+  (let (Name (json-object-get-name (pop '*Json))
+        Val  (json-object-get-value (pop '*Json) *Json) )
+    (when Name (link (cons Name (iterate-object))))
+    (when (= "," (pop '*Json))
+          (link-object) ]
 
-[de iterate-object (Value)
+[de iterate-object ()
   (make
-    (let Type (ffi 'json-type Value)
-      (case Type  (`*JSONArray    (link-array  Value))
-                  (`*JSONObject   (link-object Value))
-                  (`*JSONString   (chain (ffi 'json-string  Value)))
-                  [`*JSONBoolean  (chain (case (ffi 'json-boolean Value) (1 'true) (0 'false) ]
-                  (`*JSONNumber   (chain (ffi 'json-number  Value)))
-                  (`*JSONNull     (chain 'null)) ]
+    (let Type (pop '*Json)
+      (cond
+        ((= "[" Type)     (link T) (unless (= "]" (car *Json)) (link-array)))
+        ((= "{" Type)     (unless (= "}" (car *Json)) (link-object)))
+        ((lst? Type)      (chain (pack Type)))
+        ((num? Type)      (chain Type))
+        ((= "-" Type)     (if (num? (car *Json)) (chain (format (pack "-" (pop '*Json)))) (iterate-object)))
+        ((= 'true Type)   (chain 'true))
+        ((= 'false Type)  (chain 'false))
+        ((= 'null Type)   (chain 'null))
+        (T                (err-throw (text "Invalid Object '@1', must be '[' OR '{' OR string OR number OR true OR false OR null", Type) ]
 
 [de iterate-list (Item)
   (let Value (cdr Item)
@@ -125,14 +151,14 @@
 
 # public
 [de decode (Value Type)
-  (let Root_value
-    (if Type
-        (ffi 'json-parse-file Value)
-        (ffi 'json-parse-string Value) )
-    (when Root_value
-      (prog1
-        (iterate-object Root_value)
-        (ffi 'json-value-free Root_value) ]
+  (catch 'invalid-json
+    (use *Json
+      (setq *Json
+        (if Type
+            (json-parse-file Value)
+            (json-parse-string Value) ) )
+      (when *Json
+            (iterate-object) ) ]
 
 [de encode (Value)
   (if (=T (car Value))
