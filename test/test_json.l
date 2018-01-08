@@ -74,5 +74,6 @@
   '(assert-nil     (decode "{\"name\":[1,2,,3]}") "Double commas in Array returns NIL")
   '(assert-nil     (decode "{\"name\":true,,\"name2\":false}") "Double commas in Object returns NIL")
   '(assert-equal   '(("name" T 1 2 -3)) (decode "{\"name\":[1,2,-3]}") "Array values can be negative numbers")
+  '(assert-equal   "{\"name\":[1,2,-23]}" (encode (decode (encode (decode "{\"name\":[1,2,-23]}")))) "Yo Dawg, (encode (decode (encode (decode...")
   '(test-decode-unicode)
   '(test-decode-002f) ]
