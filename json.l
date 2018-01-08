@@ -61,6 +61,7 @@
     (= "]" Value)
     (lst? Value)
     (num? Value)
+    (= "-" Value)
     (= 'true Value)
     (= 'false Value)
     (= 'null Value)
