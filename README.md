@@ -19,7 +19,7 @@ Please read [EXPLAIN.md](EXPLAIN.md) to learn more about PicoLisp and this JSON 
 
 # Requirements
 
-  * PicoLisp 64-bit v3.1.9+
+  * PicoLisp 32-bit or 64-bit v3.1.9+
   * Tested up to PicoLisp v17.12
 
 # Getting Started
