@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.0 (2018-01-10)
+
+  * Fix issue #6 - Invalid parsing of empty arrays and empty objects
+  * Add regression test, and tests for additional JSON structures
+  * Refactor, simplify, and optimize decoder
+
 ## 3.0.0 (2018-01-08)
 
   * Re-implement JSON decoding in pure PicoLisp
