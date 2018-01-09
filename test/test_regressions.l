@@ -17,6 +17,13 @@
                   (encode (list (cons "afalsevalue" 'false)))
                   "Regression test GH issue #5 - False values are not encoded correctly" ]
 
+# Invalid parsing of empty arrays and empty objects - https://github.com/aw/picolisp-json/issues/6
+[de test-gh-issue-6 ()
+  (assert-equal   '(("test" T 1 2 NIL 4 NIL NIL (T) (T)) ("empty") ("true" . true))
+                  (decode "{\"test\":[1,2,{},4,{},{},[],[]],\"empty\":{},\"true\":true}")
+                  "Regression test GH issue #6 - Invalid parsing of empty arrays and empty objects" ]
+
 [execute
   '(test-gh-issue-4)
-  '(test-gh-issue-5) ]
+  '(test-gh-issue-5)
+  '(test-gh-issue-6) ]

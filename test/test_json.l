@@ -17,6 +17,9 @@
                     ("utf-8 string" . "あいうえお")
                     ("surrogate string" . "lorem ipsum lorem") ) )
 
+(setq
+  *Json_output2 '(("string" . "lorem ipsum") ("utf string" . "lorem ipsum") ("utf-8 string" . "あいうえお") ("surrogate string" . "lorem݄ީpsumݍ笯rem") ("positive one" . 1) ("negative one" . -1) ("pi" . 3) ("hard to parse number" . 0) ("big int" . 2147483647) ("big uint" . 4294967295) ("boolean true" . true) ("boolean false" . false) ("null" . null) ("string array" T "lorem" "ipsum") ("x^R array" T 0 1 4 9 16 25 36 49 64 81 100) ("/*" . null) ("object" ("nested string" . "str") ("nested true" . true) ("nested false" . false) ("nested null" . null) ("nested number" . 123) ("nested array" T "lorem" "ipsum")) ("*/" . null) ("/**/" . "comment") ("//" . "comment") ("url" . "https://www.example.com/search?q=12345") ("escaped chars" . "\" \\ /") ("empty object") ("empty array" T)) )
+
 [de test-decode-string ()
   (assert-equal   '(("Hello" . "World"))
                   (decode "{\"Hello\":\"World\"}")
@@ -26,6 +29,11 @@
   (assert-equal *Json_output
                 (decode "../test.json" T)
                 "Decode JSON file into a list" ]
+
+[de test-decode-file2 ()
+  (assert-equal *Json_output2
+                (decode "../test2.json" T)
+                "Decode JSON file2 into a list" ]
 
 [de test-decode-invalid ()
   (assert-nil   (decode "{\"I am not JASON\"}")
@@ -52,6 +60,7 @@
 [execute
   '(test-decode-string)
   '(test-decode-file)
+  '(test-decode-file2)
   '(test-decode-invalid)
   '(test-encode-string)
 
