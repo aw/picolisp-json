@@ -84,46 +84,36 @@
     (if Res
         (prog
           (json-array-check-value Res)
-          (unless (= "]" Res) (link (iterate-object T))) ) )
+          (unless (= "]" Res) (link (iterate-object))) ) )
 
     (if (= "]" (car *Json))
-        (prog
-          (pop '*Json)
-          (when (= "," (car *Json)) ) )
-        (if (= "," (car *Json))
-            (prog
+        (pop '*Json)
+        (when (= "," (car *Json))
               (pop '*Json)
-              (link-array) )
-            (link-array) ]
+              (link-array) ]
 
 [de link-object-value (Name)
   (json-object-check-separator (pop '*Json))
   (link (cons (pack Name) (iterate-object))) ]
 
-[de link-object (Array?)
+[de link-object ()
   (let Name (car *Json)
     (if Name
         (prog
           (json-object-check-name Name)
           (unless (= "}" Name) (pop '*Json) (link-object-value Name)) ) )
 
-    (when Array? (cut 2 '*Json))
+    (if (= "}" (car *Json))
+        (pop '*Json)
+        (when (= "," (car *Json))
+              (pop '*Json)
+              (link-object) ]
 
-    (unless Array?
-            (if (= "}" (car *Json))
-                (prog
-                  (pop '*Json)
-                  (when (= "," (car *Json)) ) )
-
-                (when (= "," (car *Json))
-                      (pop '*Json)
-                      (link-object) ) ]
-
-[de iterate-object (Array?)
+[de iterate-object ()
   (let Type (pop '*Json)
     (cond
       ((= "[" Type)     (make (link-array T)))
-      ((= "{" Type)     (make (link-object Array?)))
+      ((= "{" Type)     (make (link-object)))
       ((lst? Type)      (pack Type))
       ((num? Type)      Type)
       ((= "-" Type)     (if (num? (car *Json)) (format (pack "-" (pop '*Json))) (iterate-object)))
