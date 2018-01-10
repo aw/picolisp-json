@@ -12,7 +12,7 @@
   (local json-array-check json-object-check json-object-check-separator)
   (local link-generic link-array link-object link-object-value)
   (local iterate-object iterate-list make-null make-boolean make-json-number)
-  (local make-json-string make-json-array make-object make-array) )
+  (local make-json-string make-json-array make-generic make-object make-array) )
 
 (load (pack (car (file)) "module.l"))
 
@@ -128,11 +128,11 @@
       (make-object Value) ]
 
 [de make-null (Value)
-  (when (= 'null Value) "null") ]
+  (when (== 'null Value) 'null) ]
 
 [de make-boolean (Value)
-  (cond ((= 'true Value)  "true")
-        ((= 'false Value) "false") ]
+  (cond ((== 'true Value)  'true)
+        ((== 'false Value) 'false) ]
 
 [de make-json-number (Value)
   (when (num? Value) Value) ]
@@ -143,22 +143,19 @@
 [de make-json-array (Value)
   (when (=T (car Value)) (make-array (cdr Value))) ]
 
+[de make-generic (Bracket_open Bracket_close Iterator)
+  (pack Bracket_open
+        (glue "," (mapcar '((N) (eval Iterator)) Value))
+        Bracket_close ]
+
 [de make-object (Value)
-  (pack "{"
-        (glue ","
-              (mapcar
-                '((N) (pack "\"" (car N) "\":" (iterate-list N)))
-                Value ) )
-        "}" ]
+  (make-generic "{" "}"
+                '(pack "\"" (car N) "\":" (iterate-list N)) ]
 
 [de make-array (Value)
-  (pack "["
-        (glue ","
-              (mapcar
-                '((N) (iterate-list (cons NIL N)))
-                Value ) )
-        "]" ]
-
+  (make-generic "["
+                "]"
+                '(iterate-list (cons NIL N)) ]
 
 # public
 [de decode (Value Type)

@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.2.0 (2018-01-10)
+
+  * Fix issue #8 - Invalid encoding of true,false,null
+  * Add regression tests for this issue
+  * Refactor encoder
+
 ## 3.1.0 (2018-01-10)
 
   * Fix issue #6 - Invalid parsing of empty arrays and empty objects
