@@ -23,7 +23,29 @@
                   (decode "{\"test\":[1,2,{},4,{},{},[],[]],\"empty\":{},\"true\":true}")
                   "Regression test GH issue #6 - Invalid parsing of empty arrays and empty objects" ]
 
+# Invalid encoding of true,false,null - https://github.com/aw/picolisp-json/issues/8
+[de test-gh-issue-8 ()
+  (assert-equal   "{\"test\":\"true\"}"
+                  (encode '(("test" . "true")))
+                  "Regression test GH issue #8 - Invalid encoding of true" )
+  (assert-equal   "{\"test\":\"false\"}"
+                  (encode '(("test" . "false")))
+                  "Regression test GH issue #8 - Invalid encoding of false" )
+  (assert-equal   "{\"test\":\"null\"}"
+                  (encode '(("test" . "null")))
+                  "Regression test GH issue #8 - Invalid encoding of null" )
+  (assert-equal   "{\"test\":true}"
+                  (encode '(("test" . true)))
+                  "Regression test GH issue #8 - Invalid encoding of true" )
+  (assert-equal   "{\"test\":false}"
+                  (encode '(("test" . false)))
+                  "Regression test GH issue #8 - Invalid encoding of false" )
+  (assert-equal   "{\"test\":null}"
+                  (encode '(("test" . null)))
+                  "Regression test GH issue #8 - Invalid encoding of null" ) ]
+
 [execute
   '(test-gh-issue-4)
   '(test-gh-issue-5)
-  '(test-gh-issue-6) ]
+  '(test-gh-issue-6)
+  '(test-gh-issue-8) ]
