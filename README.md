@@ -6,7 +6,9 @@ This library can be used to parse and serialize (encode/decode) JSON strings in 
 
 ![picolisp-json](https://cloud.githubusercontent.com/assets/153401/6571543/56e31e44-c701-11e4-99f0-c2c51fd8061b.png)
 
-Please read [EXPLAIN.md](EXPLAIN.md) to learn more about PicoLisp and this JSON library.
+**NEW:** Please read [EXPLAIN_v3.md](EXPLAIN_v3.md) to learn more about PicoLisp and this (`v3`) JSON library.
+
+Please read [EXPLAIN.md](EXPLAIN.md) to learn more about PicoLisp and the older (`v2`) JSON library.
 
   1. [Requirements](#requirements)
   2. [Getting Started](#getting-started)

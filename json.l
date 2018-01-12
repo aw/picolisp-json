@@ -149,7 +149,8 @@
         Bracket_close ]
 
 [de make-object (Value)
-  (make-generic "{" "}"
+  (make-generic "{"
+                "}"
                 '(pack "\"" (car N) "\":" (iterate-list N)) ]
 
 [de make-array (Value)

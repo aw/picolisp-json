@@ -2,7 +2,7 @@
 
 This document provides a short walkthrough of the source code for the [PicoLisp-JSON](https://github.com/aw/picolisp-json.git) encoder/decoder.
 
-**Note:** This document is outdated and only valid for [picolisp-json v2.x](https://github.com/aw/picolisp-json/tree/v2.2.0) or older.
+**Note:** This document covers the older `v2` of the JSON library. To view the newer (pure PicoLisp) version [click here](https://github.com/aw/picolisp-json/blob/master/EXPLAIN.md).
 
 It's split into a few sections for easier reading:
 
