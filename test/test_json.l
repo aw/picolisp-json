@@ -2,9 +2,6 @@
 
 (prinl "^J  Testing JSON encoder/decoder for PicoLisp^J")
 
-(unless (= "false" (sys "PIL_NAMESPACES"))
-  (symbols 'json) )
-
 (setq
       *My_tests_are_order_dependent NIL
       *Json_output '(("first" . "John")

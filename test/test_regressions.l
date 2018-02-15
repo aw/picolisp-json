@@ -44,8 +44,16 @@
                   (encode '(("test" . null)))
                   "Regression test GH issue #8 - Invalid encoding of null" ) ]
 
+(unless symbols (from "######"))
+  [de test-gh-issue-9 ()
+    (assert-equal   '(("Hello" . "World"))
+                    (json~decode "{\"Hello\":\"World\"}")
+                    "Regression test GH issue #9 - json~decode broken outside of 'json' namespace" ) ]
+######
+
 [execute
   '(test-gh-issue-4)
   '(test-gh-issue-5)
   '(test-gh-issue-6)
-  '(test-gh-issue-8) ]
+  '(test-gh-issue-8)
+  (when symbols '(test-gh-issue-9) ]

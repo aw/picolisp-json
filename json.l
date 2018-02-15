@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2017-2018 Alexander Williams, Unscramble <license@unscramble.jp>
 
-(unless (= "false" (sys "PIL_NAMESPACES"))
+(and symbols (not (= "false" (sys "PIL_NAMESPACES")))
   (symbols 'json 'pico)
 
   (local MODULE_INFO *Msg err-throw)
@@ -76,26 +76,28 @@
           (err-throw (text "Invalid Object separator '@1', must be ':'", Separator) ]
 
 # internal
-[de link-generic (Type Bracket Iterator)
+[de link-generic (Checker Linker Bracket Iterator)
   (let Name (car *Json)
     (when Name
-          ((any (pack "json-" Type "-check")) Name)
+          (eval Checker)
           (unless (= Bracket Name) (eval Iterator)) )
 
     (if (= Bracket (car *Json))
         (pop '*Json)
         (when (= "," (car *Json))
               (pop '*Json)
-              ((any (pack "link-" Type))) ]
+              (eval Linker) ]
 
 [de link-array (Make)
   (when Make (link T))
-  (link-generic "array"
+  (link-generic '(json-array-check Name)
+                '(link-array)
                 "]"
                 '(link (iterate-object)) ]
 
 [de link-object ()
-  (link-generic "object"
+  (link-generic '(json-object-check Name)
+                '(link-object)
                 "}"
                 '(link-object-value Name) ]
 
