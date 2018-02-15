@@ -14,8 +14,6 @@
   (local iterate-object iterate-list make-null make-boolean make-json-number)
   (local make-json-string make-json-array make-generic make-object make-array) )
 
-(load (pack (car (file)) "module.l"))
-
 # send error message to STDERR
 [de err-throw (Error)
   (msg Error)

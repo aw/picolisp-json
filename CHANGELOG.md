@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.3.0 (2018-02-15)
+
+  * Fix issue #9 - Bug in namespaces functionality
+  * Add regression tests for this issue
+  * Add notice about namespaces in PicoLisp >= 17.3.4
+  * Don't load module.l in json.l
+
 ## 3.2.0 (2018-01-10)
 
   * Fix issue #8 - Invalid encoding of true,false,null
