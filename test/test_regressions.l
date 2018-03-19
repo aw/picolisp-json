@@ -4,7 +4,7 @@
 
 # Invalid result from double-quoted strings - https://github.com/aw/picolisp-json/issues/4
 [de test-gh-issue-4 ()
-  (assert-equal   "{\"etag\":\"\\\"12345\\\"\"}"
+  (assert-equal   "{\"etag\":\"\"12345\"\"}"
                   (encode '(("etag" . "\"12345\"")))
                   "Regression test GH issue #4 - Invalid result from double-quoted strings" ]
 
@@ -55,7 +55,13 @@
 [de test-gh-issue-10 ()
   (assert-equal   '(("test" . "x\^2"))
                   (decode "../test4.json" T)
-                  "Regression test GH issue #10 - Invalid parsing of caret (\^) characters" ]
+                  "Regression test GH issue #10 - Invalid parsing of caret (\^) characters (1)" )
+  (assert-equal   "{\"test\":\"x\^2\"}"
+                  (encode (decode "../test4.json" T))
+                  "Regression test GH issue #10 - Invalid parsing of caret (\^) characters (2)" )
+  (assert-equal   '(("test" . "x\^2"))
+                  (decode (encode (decode "../test4.json" T)))
+                  "Regression test GH issue #10 - Invalid parsing of caret (\^) characters (3)" ]
 
 
 [execute
