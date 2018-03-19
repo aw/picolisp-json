@@ -61,8 +61,10 @@
                   "Regression test GH issue #10 - Invalid parsing of caret (\^) characters (2)" )
   (assert-equal   '(("test" . "x\^2"))
                   (decode (encode (decode "../test4.json" T)))
-                  "Regression test GH issue #10 - Invalid parsing of caret (\^) characters (3)" ]
-
+                  "Regression test GH issue #10 - Invalid parsing of caret (\^) characters (3)" )
+  (assert-equal   "{\"test\":\"x\^2\\u1234\"}"
+                  (encode '(("test" . "x\^2\\u1234")))
+                  "Regression test GH issue #10 - Invalid parsing of caret (\^) characters (4)" ]
 
 [execute
   '(test-gh-issue-4)
