@@ -34,6 +34,7 @@
       (while Value
         (let R (pop 'Value)
           (cond
+            [(= "\^" R) (link "\\\^") ] # ^ becomes \^
             [(and (= "\\" R) (= "u" (car Value))) (let U (cut 5 'Value) (link (char (hex (pack (tail 4 U) ] # \uNNNN hex
             [(and (= "\\" R) (= "b" (car Value))) (pop 'Value) (link (char (hex "08") ] # \b backspace
             [(and (= "\\" R) (= "f" (car Value))) (pop 'Value) (link (char (hex "0C") ] # \f formfeed

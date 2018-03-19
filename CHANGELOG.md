@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.4.0 (2018-03-19)
+
+  * Fix issue #10 - Invalid parsing of strings with caret (^)
+  * Add regression tests for this issue
+
 ## 3.3.0 (2018-02-15)
 
   * Fix issue #9 - Bug in namespaces functionality
