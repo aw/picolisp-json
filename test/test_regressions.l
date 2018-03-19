@@ -49,6 +49,7 @@
     (assert-equal   '(("Hello" . "World"))
                     (json~decode "{\"Hello\":\"World\"}")
                     "Regression test GH issue #9 - json~decode broken outside of 'json' namespace" ) ]
+######
 
 # Invalid parsing of caret (^) characters - https://github.com/aw/picolisp-json/issues/10
 [de test-gh-issue-10 ()
@@ -56,7 +57,6 @@
                   (decode "../test4.json" T)
                   "Regression test GH issue #10 - Invalid parsing of caret (\^) characters" ]
 
-######
 
 [execute
   '(test-gh-issue-4)
