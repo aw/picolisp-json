@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.7.0 (2018-03-21)
+
+  * Fix issue #13 - Invalid encoding of control characters 0x01-0x1F
+  * Add regression tests for this issue
+
 ## 3.6.0 (2018-03-21)
 
   * Fix issue #12 - Invalid encoding of quote and solidus (\\ and \") characters

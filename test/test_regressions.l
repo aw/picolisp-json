@@ -96,6 +96,15 @@
                   (decode "{\"test\":\"/\"}")
                   "Regression test GH issue #12 - Invalid encoding of quote and solidus (\\ and \") characters (6)" ) ]
 
+# Invalid encoding of control characters 01-0x1F - https://github.com/aw/picolisp-json/issues/13
+[de test-gh-issue-13 ()
+  (assert-equal   "{\"test\":\"\\u0001\\u001E\\u001F \"}"
+                  (encode (decode "../test7.json" T))
+                  "Regression test GH issue #13 - Invalid encoding of control characters 0x01-0x1F (1)" )
+  (assert-equal   "{\"test\":\"\\u0001\\u001E\\u001F \"}"
+                  (encode (list (cons "test" (pack "^A^^^_" (char 32)))))
+                  "Regression test GH issue #13 - Invalid encoding of control characters 0x01-0x1F (2)" ) ]
+
 [execute
   '(test-gh-issue-4)
   '(test-gh-issue-5)
@@ -104,4 +113,5 @@
   (when symbols '(test-gh-issue-9))
   '(test-gh-issue-10)
   '(test-gh-issue-11)
-  '(test-gh-issue-12) ]
+  '(test-gh-issue-12)
+  '(test-gh-issue-13) ]

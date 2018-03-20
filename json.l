@@ -2,7 +2,7 @@
 #
 # The MIT License (MIT)
 #
-# Copyright (c) 2017-2018 Alexander Williams, Unscramble <license@unscramble.jp>
+# Copyright (c) 2015-2018 Alexander Williams, Unscramble <license@unscramble.jp>
 
 (and symbols (not (= "false" (sys "PIL_NAMESPACES")))
   (symbols 'json 'pico)
@@ -13,6 +13,8 @@
   (local link-generic link-array link-object link-object-value)
   (local iterate-object iterate-list make-null make-boolean make-json-number)
   (local make-json-string make-json-array make-generic make-object make-array) )
+
+(setq *Json_control_characters (extract '((N) (unless (member N '("^H" "^L" "^J" "^M" "^I")) N)) (mapcar char (range 1 31))))
 
 # send error message to STDERR
 [de err-throw (Error)
@@ -143,16 +145,18 @@
         (pack
           "\""
           (extract '((N)
-                      (case N
-                        ("\"" "\\\"")
-                        ("\\" "\\\\")
-                        ("^H" "\\b")
-                        ("^L" "\\f")
-                        ("^J" "\\n")
-                        ("^M" "\\r")
-                        ("^I" "\\t")
-                        ("\\\^" "\^")
-                        (T N) ) )
+                      (if (member N *Json_control_characters)
+                          (pack "\\u" (pad 4 (hex (char N))))
+                          (case N
+                            ("\"" "\\\"")
+                            ("\\" "\\\\")
+                            ("^H" "\\b")
+                            ("^L" "\\f")
+                            ("^J" "\\n")
+                            ("^M" "\\r")
+                            ("^I" "\\t")
+                            ("\\\^" "\^")
+                            (T N) ) ) )
                     (chop Value) )
           "\"" ]
 
