@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.6.0 (2018-03-21)
+
+  * Fix issue #12 - Invalid encoding of quote and solidus (\\ and \") characters
+  * Add regression tests for this issue
+  * Fix existing regression tests which provided incorrect results
+
 ## 3.5.0 (2018-03-20)
 
   * Fix issue #11 - Invalid encoding of special control characters (^J, ^M, ^I)
