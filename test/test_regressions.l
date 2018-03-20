@@ -4,7 +4,7 @@
 
 # Invalid result from double-quoted strings - https://github.com/aw/picolisp-json/issues/4
 [de test-gh-issue-4 ()
-  (assert-equal   "{\"etag\":\"\"12345\"\"}"
+  (assert-equal   "{\"etag\":\"\\\"12345\\\"\"}"
                   (encode '(("etag" . "\"12345\"")))
                   "Regression test GH issue #4 - Invalid result from double-quoted strings" ]
 
@@ -62,7 +62,7 @@
   (assert-equal   '(("test" . "x\^2"))
                   (decode (encode (decode "../test4.json" T)))
                   "Regression test GH issue #10 - Invalid parsing of caret (\^) characters (3)" )
-  (assert-equal   "{\"test\":\"x\^2\\u1234\"}"
+  (assert-equal   "{\"test\":\"x\^2\\\\u1234\"}"
                   (encode '(("test" . "x\^2\\u1234")))
                   "Regression test GH issue #10 - Invalid parsing of caret (\^) characters (4)" ]
 
@@ -75,6 +75,27 @@
                   (encode (list (cons "test" "Hello^J^M^I^H^LWorld")))
                   "Regression test GH issue #11 - Invalid encoding of special control (\^J\^M\^I) characters (2)" ) ]
 
+# Invalid encoding of quote and solidus (\ and ") characters - https://github.com/aw/picolisp-json/issues/12
+[de test-gh-issue-12 ()
+  (assert-equal   "{\"test\":\"hello\\\"\\\\\"}"
+                  (encode (decode "../test6.json" T))
+                  "Regression test GH issue #12 - Invalid encoding of quote and solidus (\\ and \") characters (1)" )
+  (assert-equal   "{\"test\":\"Hello\\\\\\\"\\\\\\\\World\"}"
+                  (encode (list (cons "test" "Hello\\\"\\\\World")))
+                  "Regression test GH issue #12 - Invalid encoding of quote and solidus (\\ and \") characters (2)" )
+  (assert-equal   "{\"test\":\"/\"}"
+                  (encode (list (cons "test" "/")))
+                  "Regression test GH issue #12 - Invalid encoding of quote and solidus (\\ and \") characters (3)" )
+  (assert-equal   "{\"test\":\"/\"}"
+                  (encode (list (cons "test" "\/")))
+                  "Regression test GH issue #12 - Invalid encoding of quote and solidus (\\ and \") characters (4)" )
+  (assert-equal   '(("test" . "\/"))
+                  (decode "{\"test\":\"/\"}")
+                  "Regression test GH issue #12 - Invalid encoding of quote and solidus (\\ and \") characters (5)" )
+  (assert-equal   '(("test" . "/"))
+                  (decode "{\"test\":\"/\"}")
+                  "Regression test GH issue #12 - Invalid encoding of quote and solidus (\\ and \") characters (6)" ) ]
+
 [execute
   '(test-gh-issue-4)
   '(test-gh-issue-5)
@@ -82,4 +103,5 @@
   '(test-gh-issue-8)
   (when symbols '(test-gh-issue-9))
   '(test-gh-issue-10)
-  '(test-gh-issue-11) ]
+  '(test-gh-issue-11)
+  '(test-gh-issue-12) ]
