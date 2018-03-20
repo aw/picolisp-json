@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.5.0 (2018-03-20)
+
+  * Fix issue #11 - Invalid encoding of special control characters (^J, ^M, ^I)
+  * Ensure ^H (\b) and ^L (\f) are also encoded correctly
+  * Add regression tests for this issue
+
 ## 3.4.0 (2018-03-19)
 
   * Fix issue #10 - Invalid parsing of strings with caret (^)

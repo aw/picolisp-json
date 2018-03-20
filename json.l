@@ -139,7 +139,20 @@
   (when (num? Value) Value) ]
 
 [de make-json-string (Value)
-  (when (str? Value) (pack "\"" (filter '((N) (if (= "\\\^" N) "\^" N)) (chop Value)) "\"") ]
+  (when (str? Value)
+        (pack
+          "\""
+          (extract '((N)
+                      (case N
+                        ("^H" "\\b")
+                        ("^L" "\\f")
+                        ("^J" "\\n")
+                        ("^M" "\\r")
+                        ("^I" "\\t")
+                        ("\\\^" "\^")
+                        (T N) ) )
+                    (chop Value) )
+          "\"" ]
 
 [de make-json-array (Value)
   (when (=T (car Value)) (make-array (cdr Value))) ]

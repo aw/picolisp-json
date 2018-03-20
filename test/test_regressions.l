@@ -66,10 +66,20 @@
                   (encode '(("test" . "x\^2\\u1234")))
                   "Regression test GH issue #10 - Invalid parsing of caret (\^) characters (4)" ]
 
+# Invalid encoding of special control (^J^M^I) characters - https://github.com/aw/picolisp-json/issues/11
+[de test-gh-issue-11 ()
+  (assert-equal   "{\"test\":\"\\n\\r\\t\\b\\f\"}"
+                  (encode (decode "../test5.json" T))
+                  "Regression test GH issue #11 - Invalid encoding of special control (\^J\^M\^I) characters (1)" )
+  (assert-equal   "{\"test\":\"Hello\\n\\r\\t\\b\\fWorld\"}"
+                  (encode (list (cons "test" "Hello^J^M^I^H^LWorld")))
+                  "Regression test GH issue #11 - Invalid encoding of special control (\^J\^M\^I) characters (2)" ) ]
+
 [execute
   '(test-gh-issue-4)
   '(test-gh-issue-5)
   '(test-gh-issue-6)
   '(test-gh-issue-8)
   (when symbols '(test-gh-issue-9))
-  '(test-gh-issue-10) ]
+  '(test-gh-issue-10)
+  '(test-gh-issue-11) ]
