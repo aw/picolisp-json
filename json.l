@@ -40,7 +40,16 @@
             [(and (= "\\" R) (= "u" (car Value))) (let U (cut 5 'Value) (link (char (hex (pack (tail 4 U) ] # \uNNNN hex
             [(and (= "\\" R) (= "b" (car Value))) (pop 'Value) (link (char (hex "08") ] # \b backspace
             [(and (= "\\" R) (= "f" (car Value))) (pop 'Value) (link (char (hex "0C") ] # \f formfeed
+            [(and (= ":" R) (num? (format (car Value))) (find '((N) (sub? (lowc N) "eE.")) (head -1 Value))) (json-parse-number '+) ] # 1.2345e+32, 1.2345E32, 1.2345e-32
+            [(and (= ":" R) (= "-" (car Value)) (num? (format (cadr Value))) (find '((N) (sub? (lowc N) "eE.")) (head -1 Value))) (json-parse-number '-) ] # -1.23e+32
             (T (link R)) ]
+
+[de json-parse-number (Sign)
+  (ifn  (num? (format (car (tail 2 Value))))
+        (err-throw (text "Invalid JSON number '@1'", (head -1 Value)))
+        (link ":")
+        (let Num (pack "\"" (cut (- (length Value) 1) 'Value) "\"")
+          (link Num) ]
 
 [de json-count-brackets (Str)
   (let Json_stack NIL

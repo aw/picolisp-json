@@ -48,17 +48,33 @@
                   "Encode list into JSON string" ]
 
 [de test-decode-unicode ()
-  (assert-equal   '(("name" . "^H")) (decode "{\"name\":\"\\b\"}") "Ensure '\\b' backspace is decoded")
-  (assert-equal   '(("name" . "^L")) (decode "{\"name\":\"\\f\"}") "Ensure '\\f' formfeed is decoded")
-  (assert-equal   '(("name" . "^J")) (decode "{\"name\":\"\\n\"}") "Ensure '\\n' newline is decoded")
-  (assert-equal   '(("name" . "^M")) (decode "{\"name\":\"\\r\"}") "Ensure '\\r' carriage return is decoded")
-  (assert-equal   '(("name" . "^I")) (decode "{\"name\":\"\\t\"}") "Ensure '\\t' horizontal tab is decoded") ]
+  (assert-equal   '(("name" . "^H")) (decode "{\"name\":\"\\b\"}") "(unicode) Ensure '\\b' backspace is decoded")
+  (assert-equal   '(("name" . "^L")) (decode "{\"name\":\"\\f\"}") "(unicode) Ensure '\\f' formfeed is decoded")
+  (assert-equal   '(("name" . "^J")) (decode "{\"name\":\"\\n\"}") "(unicode) Ensure '\\n' newline is decoded")
+  (assert-equal   '(("name" . "^M")) (decode "{\"name\":\"\\r\"}") "(unicode) Ensure '\\r' carriage return is decoded")
+  (assert-equal   '(("name" . "^I")) (decode "{\"name\":\"\\t\"}") "(unicode) Ensure '\\t' horizontal tab is decoded") ]
 
 [de test-decode-002f ()
-  (assert-equal   '(("name" . "/")) (decode "{\"name\":\"\\u002F\"}") "Ensure '\\u002F' produces the same result: /")
-  (assert-equal   '(("name" . "/")) (decode "{\"name\":\"\\u002f\"}") "Ensure '\\u002f' produces the same result: /")
-  (assert-equal   '(("name" . "/")) (decode "{\"name\":\"\\/\"}") "Ensure '\\/' produces the same result: /")
-  (assert-equal   '(("name" . "/")) (decode "{\"name\":\"/\"}") "Ensure '/' produces the same result: /") ]
+  (assert-equal   '(("name" . "/")) (decode "{\"name\":\"\\u002F\"}") "(\\u002f) Ensure '\\u002F' produces the same result: /")
+  (assert-equal   '(("name" . "/")) (decode "{\"name\":\"\\u002f\"}") "(\\u002f) Ensure '\\u002f' produces the same result: /")
+  (assert-equal   '(("name" . "/")) (decode "{\"name\":\"\\/\"}") "(\\u002f) Ensure '\\/' produces the same result: /")
+  (assert-equal   '(("name" . "/")) (decode "{\"name\":\"/\"}") "(\\u002f) Ensure '/' produces the same result: /") ]
+
+[de test-decode-scientific ()
+  (assert-equal   (quote ("name" . `(intern (pack "1." 234)))) (decode "{\"name\":1.234}") "(scientific) Ensure '1.234' is decoded")
+  (assert-equal   '(("name" . 1.234e32)) (decode "{\"name\":1.234e32}") "(scientific) Ensure '1.234e32' is decoded")
+  (assert-equal   '(("name" . 1.234E32)) (decode "{\"name\":1.234E32}") "(scientific) Ensure '1.234E32' is decoded")
+  (assert-equal   '(("name" . 1.234e+32)) (decode "{\"name\":1.234e+32}") "(scientific) Ensure '1.234e+32' is decoded")
+  (assert-equal   '(("name" . 1.234e-32)) (decode "{\"name\":1.234e-32}") "(scientific) Ensure '1.234e-32' is decoded")
+  (assert-equal   '(("name" . 156.234e+32)) (decode "{\"name\":156.234e+32}") "(scientific) Ensure '156.234e+32' is decoded")
+  (assert-equal   '(("name" . "156.234")) (decode "{\"name\":156.234}") "(scientific) Ensure '156.234' is decoded")
+  (assert-equal   '(("name" . "-9876.543210")) (decode "{\"name\":-9876.543210}") "(scientific) Ensure '-9876.543210' is decoded")
+  (assert-equal   '(("name" . -9876.543210e+32)) (decode "{\"name\":-9876.543210e+32}") "(scientific) Ensure '-9876.543210e+32' is decoded")
+  (assert-nil     (decode "{\"name\":-1.23e}") "(scientific) Ensure '-1.23e' returns NIL")
+  (assert-nil     (decode "{\"name\":1.234e}") "(scientific) Ensure '1.234e' returns NIL")
+  (assert-nil     (decode "{\"name\":12234e}") "(scientific) Ensure '12234e' returns NIL")
+  (assert-nil     (decode "{\"name\":1.234-}") "(scientific) Ensure '1.234-' returns NIL")
+  (assert-nil     (decode "{\"name\":1.234+}") "(scientific) Ensure '1.234+' returns NIL") ]
 
 [execute
   '(test-decode-string)
@@ -89,4 +105,5 @@
   '(assert-equal   '(("name" T 1 2 -3)) (decode "{\"name\":[1,2,-3]}") "Array values can be negative numbers")
   '(assert-equal   "{\"name\":[1,2,-23]}" (encode (decode (encode (decode "{\"name\":[1,2,-23]}")))) "Yo Dawg, (encode (decode (encode (decode...")
   '(test-decode-unicode)
-  '(test-decode-002f) ]
+  '(test-decode-002f)
+  '(test-decode-scientific) ]
