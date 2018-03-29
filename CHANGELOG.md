@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.8.0 (2018-03-29)
+
+  * Fix issue #15 -  Invalid parsing of certain characters with \uNNNN
+  * Add regression tests for this issue
+
 ## 3.7.0 (2018-03-21)
 
   * Fix issue #13 - Invalid encoding of control characters 0x01-0x1F

@@ -105,6 +105,18 @@
                   (encode (list (cons "test" (pack "^A^^^_" (char 32)))))
                   "Regression test GH issue #13 - Invalid encoding of control characters 0x01-0x1F (2)" ) ]
 
+}# Invalid parsing of certain characters with \uNNNN - https://github.com/aw/picolisp-json/issues/15
+[de test-gh-issue-15 ()
+  (assert-equal   '(("test" . "\""))
+                  (decode "{\"test\":\"\\u0022\"}")
+                  "Regression test GH issue #15 - Invalid parsing of certain characters with \uNNNN (1)" )
+  (assert-equal   '(("test" . "\\"))
+                  (decode "{\"test\":\"\\u005c\"}")
+                  "Regression test GH issue #15 - Invalid parsing of certain characters with \uNNNN (2)" )
+  (assert-equal   '(("test" . "\^"))
+                  (decode "{\"test\":\"\\u005e\"}")
+                  "Regression test GH issue #15 - Invalid parsing of certain characters with \uNNNN (3)" ) ]
+
 [execute
   '(test-gh-issue-4)
   '(test-gh-issue-5)
@@ -114,4 +126,5 @@
   '(test-gh-issue-10)
   '(test-gh-issue-11)
   '(test-gh-issue-12)
-  '(test-gh-issue-13) ]
+  '(test-gh-issue-13)
+  '(test-gh-issue-15) ]
