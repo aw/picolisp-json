@@ -19,6 +19,7 @@
 # send error message to STDERR
 [de err-throw (Error)
   (msg Error)
+  (setq *Msg Error)
   (throw 'invalid-json NIL) ]
 
 # json

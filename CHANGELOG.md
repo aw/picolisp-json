@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.9.0 (2018-06-19)
+
+  * Store JSON parsing error message in *Msg
+
 ## 3.8.0 (2018-03-29)
 
   * Fix issue #15 -  Invalid parsing of certain characters with \uNNNN

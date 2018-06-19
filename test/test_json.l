@@ -89,4 +89,5 @@
   '(assert-equal   '(("name" T 1 2 -3)) (decode "{\"name\":[1,2,-3]}") "Array values can be negative numbers")
   '(assert-equal   "{\"name\":[1,2,-23]}" (encode (decode (encode (decode "{\"name\":[1,2,-23]}")))) "Yo Dawg, (encode (decode (encode (decode...")
   '(test-decode-unicode)
-  '(test-decode-002f) ]
+  '(test-decode-002f)
+  '(assert-equal   (or (decode "{\"name\":invalid}") *Msg) "Invalid Object 'invalid', must be '[' OR '{' OR string OR number OR true OR false OR null" "Error message is stored in *Msg") ]
