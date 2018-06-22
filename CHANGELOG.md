@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.10.0 (2018-06-29)
+
+  * Optionally prevent duplicate keys from being accepted with '*Json_prevent_duplicate_keys'
+  * Remove optional 'Make' parameter for '(link-array)'
+
 ## 3.9.0 (2018-06-19)
 
   * Store JSON parsing error message in *Msg

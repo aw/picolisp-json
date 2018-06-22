@@ -60,7 +60,9 @@ Only the following functions are exported publicly:
 
 ### Notes
 
-  * A successful result will return a list. Failures return `NIL` and print the error message to `STDERR` (standard error).
+  * To disallow duplicate Object keys: `(on *Json_prevent_duplicate_keys)`. Default allows duplicate Object keys.
+  * A successful result will return a list.
+  * Failures return `NIL`, store the error message in `*Msg`, and print the error message to `STDERR` (standard error).
   * Keys are in `car`, values are in `cdr`.
   * When the 2nd item in the list is `T`, the rest of the list represents a JSON array.
   * When the 2nd item in the list is a cons pair, it represents a JSON object.

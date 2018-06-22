@@ -75,6 +75,8 @@
     (err-throw (text "Invalid Array value '@1', must be {' OR '[' OR ']' OR string OR number OR true OR false OR null", Value) ]
 
 [de json-object-check (Name)
+  (when (and *Json_prevent_duplicate_keys (assoc (pack Name) (made)))
+        (err-throw (text "Duplicate Object key '@1'", Name)) )
   (or
     (lst? Name)
     (= "}" Name)
@@ -97,8 +99,7 @@
               (pop '*Json)
               (eval Linker) ]
 
-[de link-array (Make)
-  (when Make (link T))
+[de link-array ()
   (link-generic '(json-array-check Name)
                 '(link-array)
                 "]"
@@ -118,7 +119,7 @@
 [de iterate-object ()
   (let Type (pop '*Json)
     (cond
-      ((= "[" Type)     (make (link-array T)))
+      ((= "[" Type)     (make (link T) (link-array)))
       ((= "{" Type)     (make (link-object)))
       ((lst? Type)      (pack Type))
       ((num? Type)      Type)

@@ -60,6 +60,12 @@
   (assert-equal   '(("name" . "/")) (decode "{\"name\":\"\\/\"}") "Ensure '\\/' produces the same result: /")
   (assert-equal   '(("name" . "/")) (decode "{\"name\":\"/\"}") "Ensure '/' produces the same result: /") ]
 
+[de test-duplicate-keys ()
+  (on *Json_prevent_duplicate_keys)
+  (assert-nil      (decode "{\"test\":true,\"test\":false}") "Duplicate keys are not allowed")
+  (off *Json_prevent_duplicate_keys)
+  (assert-equal   '(("test" . true) ("test" . false)) (decode "{\"test\":true,\"test\":false}") "Duplicate keys are allowed") ]
+
 [execute
   '(test-decode-string)
   '(test-decode-file)
@@ -90,4 +96,5 @@
   '(assert-equal   "{\"name\":[1,2,-23]}" (encode (decode (encode (decode "{\"name\":[1,2,-23]}")))) "Yo Dawg, (encode (decode (encode (decode...")
   '(test-decode-unicode)
   '(test-decode-002f)
-  '(assert-equal   (or (decode "{\"name\":invalid}") *Msg) "Invalid Object 'invalid', must be '[' OR '{' OR string OR number OR true OR false OR null" "Error message is stored in *Msg") ]
+  '(assert-equal   (or (decode "{\"name\":invalid}") *Msg) "Invalid Object 'invalid', must be '[' OR '{' OR string OR number OR true OR false OR null" "Error message is stored in *Msg")
+  '(test-duplicate-keys) ]
