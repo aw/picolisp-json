@@ -75,6 +75,8 @@
     (err-throw (text "Invalid Array value '@1', must be {' OR '[' OR ']' OR string OR number OR true OR false OR null", Value) ]
 
 [de json-object-check (Name)
+  (when (and *Json_prevent_duplicate_keys (assoc (pack Name) (made)))
+        (err-throw (text "Duplicate Object key '@1'", Name)) )
   (or
     (lst? Name)
     (= "}" Name)
