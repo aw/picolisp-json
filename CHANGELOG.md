@@ -3,6 +3,7 @@
 ## 3.10.0 (TBD)
 
   * Optionally prevent duplicate keys from being accepted with '*Json_prevent_duplicate_keys'
+  * Remove optional 'Make' parameter for '(link-array)'
 
 ## 3.9.0 (2018-06-19)
 

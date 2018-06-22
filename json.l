@@ -99,8 +99,7 @@
               (pop '*Json)
               (eval Linker) ]
 
-[de link-array (Make)
-  (when Make (link T))
+[de link-array ()
   (link-generic '(json-array-check Name)
                 '(link-array)
                 "]"
@@ -120,7 +119,7 @@
 [de iterate-object ()
   (let Type (pop '*Json)
     (cond
-      ((= "[" Type)     (make (link-array T)))
+      ((= "[" Type)     (make (link T) (link-array)))
       ((= "{" Type)     (make (link-object)))
       ((lst? Type)      (pack Type))
       ((num? Type)      Type)
