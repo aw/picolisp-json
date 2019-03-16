@@ -1,6 +1,7 @@
 language: bash
 sudo: false
 cache: apt
+dist: precise
 addons:
   apt:
     packages:
