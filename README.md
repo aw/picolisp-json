@@ -1,6 +1,6 @@
 # JSON Encoder/Decoder for PicoLisp
 
-[![GitHub release](https://img.shields.io/github/release/aw/picolisp-json.svg)](https://github.com/aw/picolisp-json) [![Build Status](https://travis-ci.org/aw/picolisp-json.svg?branch=master)](https://travis-ci.org/aw/picolisp-json) [![Dependency](https://img.shields.io/badge/[deps]&#32;picolisp--unit-v2.1.0-ff69b4.svg)](https://github.com/aw/picolisp-unit.git)
+[![GitHub release](https://img.shields.io/github/release/aw/picolisp-json.svg)](https://github.com/aw/picolisp-json) [![Dependency](https://img.shields.io/badge/[deps]&#32;picolisp--unit-v2.1.0-ff69b4.svg)](https://github.com/aw/picolisp-unit.git)
 
 This library can be used to parse and serialize (encode/decode) JSON strings in pure [PicoLisp](http://picolisp.com/).
 

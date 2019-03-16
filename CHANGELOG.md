@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.11.0 TBD
+
+  * Fix typo in EXPLAIN document
+  * Stop testing on broken Travis-CI environment
+
 ## 3.10.0 (2018-06-29)
 
   * Optionally prevent duplicate keys from being accepted with '*Json_prevent_duplicate_keys'
