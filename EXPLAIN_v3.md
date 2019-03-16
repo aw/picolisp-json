@@ -32,7 +32,7 @@ To work around this issue, I modified the library to _disable_ namespaces by spe
   (local MODULE_INFO *Msg err-throw)
 ```
 
-This change allows the JSON library to be loaded correctly on all 32/64-bit systems using PicoLisp higher than `version 3.1.9` (for backwards compatibility), however if namespaces aren't required, it's probably best to _disable_ namespaces as mentioend above.
+This change allows the JSON library to be loaded correctly on all 32/64-bit systems using PicoLisp higher than `version 3.1.9` (for backwards compatibility), however if namespaces aren't required, it's probably best to _disable_ namespaces as mentioned above.
 
 # Pure PicoLisp JSON decoding
 
