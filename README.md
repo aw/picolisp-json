@@ -35,8 +35,6 @@ This library has been rewritten in pure PicoLisp and contains **no external depe
 
 # Usage
 
-> **Note:** Namespaces do not work with versions of PicoLisp `>= 17.3.4`, please set the environment variable `PIL_NAMESPACES=false` (this may change in the future).
-
 Only the following functions are exported publicly:
 
   * `(decode arg1 arg2)` parses a JSON string or file

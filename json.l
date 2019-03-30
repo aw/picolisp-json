@@ -4,15 +4,18 @@
 #
 # Copyright (c) 2015-2018 Alexander Williams, Unscramble <license@unscramble.jp>
 
-(and symbols (not (= "false" (sys "PIL_NAMESPACES")))
+(unless (== 64 64) (from "####"))
+
   (symbols 'json 'pico)
 
-  (local MODULE_INFO *Msg err-throw)
-  (local json-parse-file json-parse-string json-parse-unicode json-count-brackets)
-  (local json-array-check json-object-check json-object-check-separator)
-  (local link-generic link-array link-object link-object-value)
-  (local iterate-object iterate-list make-null make-boolean make-json-number)
-  (local make-json-string make-json-array make-generic make-object make-array) )
+  (local) (MODULE_INFO *Msg err-throw json-parse-file json-parse-string
+  json-parse-unicode json-count-brackets json-array-check json-object-check
+  json-object-check-separator link-generic link-array link-object
+  link-object-value iterate-object iterate-list make-null make-boolean
+  make-json-number make-json-string make-json-array make-generic make-object
+  make-array)
+
+####
 
 (setq *Json_control_characters (extract '((N) (unless (member N '("^H" "^L" "^J" "^M" "^I")) N)) (mapcar char (range 1 31))))
 
