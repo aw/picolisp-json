@@ -21,4 +21,4 @@ $(TEST_DIR):
 check: $(TEST_DIR) run-tests
 
 run-tests:
-		PIL_NAMESPACES=false ./test.l
+		./test.l

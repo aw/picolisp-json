@@ -17,12 +17,15 @@ Please read [EXPLAIN.md](EXPLAIN.md) to learn more about PicoLisp and the older 
   5. [Testing](#testing)
   6. [Alternatives](#alternatives)
   7. [Contributing](#contributing)
-  8. [License](#license)
+  8. [Changelog](#changelog)
+  9. [License](#license)
 
 # Requirements
 
   * PicoLisp 32-bit or 64-bit v3.1.11+
   * Tested up to PicoLisp v17.12
+
+**BREAKING CHANGE since v4.0.0:** Namespaces have been completely removed, and all function names are now prefixed with _json-_ (see [Changelog](CHANGELOG.md)).
 
 # Getting Started
 
@@ -35,17 +38,13 @@ This library has been rewritten in pure PicoLisp and contains **no external depe
 
 # Usage
 
-> **Note:** Namespaces do not work with versions of PicoLisp `>= 17.3.4`, please set the environment variable `PIL_NAMESPACES=false` (this may change in the future).
+Public functions:
 
-Only the following functions are exported publicly:
-
-  * `(decode arg1 arg2)` parses a JSON string or file
+  * `(json-decode arg1 arg2)` parses a JSON string or file
     - `arg1` _String_: the JSON string or filename you want to decode
     - `arg2` _Flag (optional)_: a flag (`T` or `NIL`) indicating to parse a file if set
-  * `(encode arg1)` serializes a list into a JSON string
+  * `(json-encode arg1)` serializes a list into a JSON string
     - `arg1` _List_: a PicoLisp list which will be converted to a JSON string
-
-> **Note:** These functions are not namespace [local symbols](http://software-lab.de/doc/refL.html#local), which means they would redefine symbols with the same name in the `'pico` namespace.
 
 ### JSON-PicoLisp data type table
 
@@ -76,17 +75,17 @@ This library conforms to the [ECMA-404 The JSON Data Interchange Standard](http:
 
 # Examples
 
-### (decode String)
+### (json-decode String)
 
 ```picolisp
 (load "json.l")
 
-(decode "{\"Hello\":\"World\"}")
+(json-decode "{\"Hello\":\"World\"}")
 
 -> (("Hello" . "World"))
 ```
 
-### (decode Filename T)
+### (json-decode Filename T)
 
 The same function is used for parsing JSON strings and files.
 Simply append `T` as the last argument if you want to parse a file.
@@ -94,7 +93,7 @@ Simply append `T` as the last argument if you want to parse a file.
 ```picolisp
 (load "json.l")
 
-(decode "test.json" T)
+(json-decode "test.json" T)
 
 -> (("first" . "John")
     ("last" . "Doe")
@@ -107,21 +106,21 @@ Simply append `T` as the last argument if you want to parse a file.
     ("surrogate string" . "lorem�ipsum�lorem") )
 ```
 
-### (encode List)
+### (json-encode List)
 
 ```picolisp
 (load "json.l")
 
-(encode '(("Hello" . "World")))
+(json-encode '(("Hello" . "World")))
 
 -> "{\"Hello\":\"World\"}"
 ```
 
-### (decode InvalidString)
+### (json-decode InvalidString)
 
 ```picolisp
 
-(decode "{\"Hello\":invalid}")
+(json-decode "{\"Hello\":invalid}")
 "Invalid Object 'invalid', must be '[' OR '{' OR string OR number OR true OR false OR null"
 
 -> NIL
@@ -146,8 +145,12 @@ If you find any bugs or issues, please [create an issue](https://github.com/aw/p
 
 If you want to improve this library, please make a pull-request.
 
+# Changelog
+
+* [Changelog](CHANGELOG.md)
+
 # License
 
 [MIT License](LICENSE)
 
-Copyright (c) 2015-2018 Alexander Williams, Unscramble <license@unscramble.jp>
+Copyright (c) 2015-2019 Alexander Williams, Unscramble <license@unscramble.jp>

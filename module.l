@@ -1,11 +1,11 @@
 [de MODULE_INFO
   ("name"       "json")
-  ("version"    "3.10.0")
+  ("version"    "4.0.0")
   ("summary"    "JSON encoder/decoder for PicoLisp")
   ("source"     "https://github.com/aw/picolisp-json.git")
   ("author"     "Alexander Williams")
   ("license"    "MIT")
-  ("copyright"  "(c) 2017-2018 Alexander Williams, Unscramble <license@unscramble.jp>")
+  ("copyright"  "(c) 2015-2019 Alexander Williams, Unscramble <license@unscramble.jp>")
   ("install"    "make")
   ("requires"
-    ("picolisp-unit"    "v2.1.0"        "https://github.com/aw/picolisp-unit.git") ]
+    ("picolisp-unit"    "v3.0.0"        "https://github.com/aw/picolisp-unit.git") ]

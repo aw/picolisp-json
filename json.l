@@ -2,22 +2,12 @@
 #
 # The MIT License (MIT)
 #
-# Copyright (c) 2015-2018 Alexander Williams, Unscramble <license@unscramble.jp>
-
-(and symbols (not (= "false" (sys "PIL_NAMESPACES")))
-  (symbols 'json 'pico)
-
-  (local MODULE_INFO *Msg err-throw)
-  (local json-parse-file json-parse-string json-parse-unicode json-count-brackets)
-  (local json-array-check json-object-check json-object-check-separator)
-  (local link-generic link-array link-object link-object-value)
-  (local iterate-object iterate-list make-null make-boolean make-json-number)
-  (local make-json-string make-json-array make-generic make-object make-array) )
+# Copyright (c) 2015-2019 Alexander Williams, Unscramble <license@unscramble.jp>
 
 (setq *Json_control_characters (extract '((N) (unless (member N '("^H" "^L" "^J" "^M" "^I")) N)) (mapcar char (range 1 31))))
 
 # send error message to STDERR
-[de err-throw (Error)
+[de json-err-throw (Error)
   (msg Error)
   (setq *Msg Error)
   (throw 'invalid-json NIL) ]
@@ -56,10 +46,10 @@
             (if (or (= "{" N) (= "[" N))
                 (push 'Json_stack N)
                 (case N
-                  ("]" (let R (pop 'Json_stack) (unless (= "[" R) (err-throw "Unmatched JSON brackets '['"))))
-                  ("}" (let R (pop 'Json_stack) (unless (= "{" R) (err-throw "Unmatched JSON brackets '{'")))) ) ) )
+                  ("]" (let R (pop 'Json_stack) (unless (= "[" R) (json-err-throw "Unmatched JSON brackets '['"))))
+                  ("}" (let R (pop 'Json_stack) (unless (= "{" R) (json-err-throw "Unmatched JSON brackets '{'")))) ) ) )
             Str )
-    (when Json_stack (err-throw (text "Unmatched JSON brackets '@1'", (pop Json_stack) ]
+    (when Json_stack (json-err-throw (text "Unmatched JSON brackets '@1'", (pop Json_stack) ]
 
 [de json-array-check (Value)
   (or
@@ -72,22 +62,22 @@
     (= 'true Value)
     (= 'false Value)
     (= 'null Value)
-    (err-throw (text "Invalid Array value '@1', must be {' OR '[' OR ']' OR string OR number OR true OR false OR null", Value) ]
+    (json-err-throw (text "Invalid Array value '@1', must be {' OR '[' OR ']' OR string OR number OR true OR false OR null", Value) ]
 
 [de json-object-check (Name)
   (when (and *Json_prevent_duplicate_keys (assoc (pack Name) (made)))
-        (err-throw (text "Duplicate Object key '@1'", Name)) )
+        (json-err-throw (text "Duplicate Object key '@1'", Name)) )
   (or
     (lst? Name)
     (= "}" Name)
-    (err-throw (text "Invalid Object name '@1', must be '}' OR string", Name) ]
+    (json-err-throw (text "Invalid Object name '@1', must be '}' OR string", Name) ]
 
 [de json-object-check-separator (Separator)
   (unless (= ":" Separator)
-          (err-throw (text "Invalid Object separator '@1', must be ':'", Separator) ]
+          (json-err-throw (text "Invalid Object separator '@1', must be ':'", Separator) ]
 
 # internal
-[de link-generic (Checker Linker Bracket Iterator)
+[de json-link-generic (Checker Linker Bracket Iterator)
   (let Name (car *Json)
     (when Name
           (eval Checker)
@@ -99,57 +89,57 @@
               (pop '*Json)
               (eval Linker) ]
 
-[de link-array ()
-  (link-generic '(json-array-check Name)
-                '(link-array)
+[de json-link-array ()
+  (json-link-generic '(json-array-check Name)
+                '(json-link-array)
                 "]"
-                '(link (iterate-object)) ]
+                '(link (json-iterate-object)) ]
 
-[de link-object ()
-  (link-generic '(json-object-check Name)
-                '(link-object)
+[de json-link-object ()
+  (json-link-generic '(json-object-check Name)
+                '(json-link-object)
                 "}"
-                '(link-object-value Name) ]
+                '(json-link-object-value Name) ]
 
-[de link-object-value (Name)
+[de json-link-object-value (Name)
   (pop '*Json)
   (json-object-check-separator (pop '*Json))
-  (link (cons (pack Name) (iterate-object))) ]
+  (link (cons (pack Name) (json-iterate-object))) ]
 
-[de iterate-object ()
+[de json-iterate-object ()
   (let Type (pop '*Json)
     (cond
-      ((= "[" Type)     (make (link T) (link-array)))
-      ((= "{" Type)     (make (link-object)))
+      ((= "[" Type)     (make (link T) (json-link-array)))
+      ((= "{" Type)     (make (json-link-object)))
       ((lst? Type)      (pack Type))
       ((num? Type)      Type)
-      ((= "-" Type)     (if (num? (car *Json)) (format (pack "-" (pop '*Json))) (iterate-object)))
+      ((= "-" Type)     (if (num? (car *Json)) (format (pack "-" (pop '*Json))) (json-iterate-object)))
       ((= 'true Type)   'true)
       ((= 'false Type)  'false)
       ((= 'null Type)   'null)
-      (T                (err-throw (text "Invalid Object '@1', must be '[' OR '{' OR string OR number OR true OR false OR null", Type) ]
+      (T                (json-err-throw (text "Invalid Object '@1', must be '[' OR '{' OR string OR number OR true OR false OR null", Type) ]
 
-[de iterate-list (Item)
+[de json-iterate-list (Item)
   (let Value (cdr Item)
     (or
-      (make-null Value)
-      (make-boolean Value)
-      (make-json-number Value)
-      (make-json-string Value)
-      (make-json-array Value)
-      (make-object Value) ]
+      (json-make-null Value)
+      (json-make-boolean Value)
+      (json-make-json-number Value)
+      (json-make-json-string Value)
+      (json-make-json-array Value)
+      (json-make-object Value) ]
 
-[de make-null (Value)
+[de json-make-null (Value)
   (when (== 'null Value) 'null) ]
 
-[de make-boolean (Value)
+[de json-make-boolean (Value)
   (cond ((== 'true Value)  'true)
         ((== 'false Value) 'false) ]
 
-[de make-json-number (Value)
+[de json-make-json-number (Value)
   (when (num? Value) Value) ]
 
-[de make-json-string (Value)
+[de json-make-json-string (Value)
   (when (str? Value)
         (pack
           "\""
@@ -169,26 +159,26 @@
                     (chop Value) )
           "\"" ]
 
-[de make-json-array (Value)
-  (when (=T (car Value)) (make-array (cdr Value))) ]
+[de json-make-json-array (Value)
+  (when (=T (car Value)) (json-make-array (cdr Value))) ]
 
-[de make-generic (Bracket_open Bracket_close Iterator)
+[de json-make-generic (Bracket_open Bracket_close Iterator)
   (pack Bracket_open
         (glue "," (mapcar '((N) (eval Iterator)) Value))
         Bracket_close ]
 
-[de make-object (Value)
-  (make-generic "{"
+[de json-make-object (Value)
+  (json-make-generic "{"
                 "}"
-                '(pack "\"" (car N) "\":" (iterate-list N)) ]
+                '(pack "\"" (car N) "\":" (json-iterate-list N)) ]
 
-[de make-array (Value)
-  (make-generic "["
+[de json-make-array (Value)
+  (json-make-generic "["
                 "]"
-                '(iterate-list (cons NIL N)) ]
+                '(json-iterate-list (cons NIL N)) ]
 
 # public
-[de decode (Value Type)
+[de json-decode (Value Type)
   (catch 'invalid-json
     (use *Json
       (setq *Json
@@ -196,9 +186,9 @@
             (json-parse-file Value)
             (json-parse-string Value) ) )
       (when *Json
-            (iterate-object) ) ]
+            (json-iterate-object) ) ]
 
-[de encode (Value)
+[de json-encode (Value)
   (if (=T (car Value))
-      (make-array (cdr Value))
-      (make-object Value) ]
+      (json-make-array (cdr Value))
+      (json-make-object Value) ]

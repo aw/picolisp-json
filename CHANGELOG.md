@@ -1,9 +1,15 @@
 # Changelog
 
-## 3.11.0 TBD
+## 4.0.0 TBD
 
   * Fix typo in EXPLAIN document
   * Stop testing on broken Travis-CI environment
+  * **Breaking changes**
+    * Remove all support for PicoLisp namespaces
+    * Prefix all internal function names with _json-_
+  * Adjust tests to use new function names
+  * Remove tests for namespace issue #9
+  * Update "picolisp-unit" testing dependency to `v3.0.0`
 
 ## 3.10.0 (2018-06-29)
 
