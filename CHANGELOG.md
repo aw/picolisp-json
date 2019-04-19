@@ -10,6 +10,7 @@
   * Adjust tests to use new function names
   * Remove tests for namespace issue #9
   * Update "picolisp-unit" testing dependency to `v3.0.0`
+  * Update supported PicoLisp version to 18.12
 
 ## 3.10.0 (2018-06-29)
 

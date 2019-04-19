@@ -1,6 +1,6 @@
 # JSON Encoder/Decoder for PicoLisp
 
-[![GitHub release](https://img.shields.io/github/release/aw/picolisp-json.svg)](https://github.com/aw/picolisp-json) [![Dependency](https://img.shields.io/badge/[deps]&#32;picolisp--unit-v2.1.0-ff69b4.svg)](https://github.com/aw/picolisp-unit.git)
+[![GitHub release](https://img.shields.io/github/release/aw/picolisp-json.svg)](https://github.com/aw/picolisp-json) [![Dependency](https://img.shields.io/badge/[deps]&#32;picolisp--unit-v3.0.0-ff69b4.svg)](https://github.com/aw/picolisp-unit.git)
 
 This library can be used to parse and serialize (encode/decode) JSON strings in pure [PicoLisp](http://picolisp.com/).
 
@@ -23,7 +23,7 @@ Please read [EXPLAIN.md](EXPLAIN.md) to learn more about PicoLisp and the older 
 # Requirements
 
   * PicoLisp 32-bit or 64-bit v3.1.11+
-  * Tested up to PicoLisp v17.12
+  * Tested up to PicoLisp v18.12
 
 **BREAKING CHANGE since v4.0.0:** Namespaces have been completely removed, and all function names are now prefixed with _json-_ (see [Changelog](CHANGELOG.md)).
 
