@@ -1,6 +1,6 @@
 # Changelog
 
-## 4.0.0 TBD
+## 4.0.0 (2019-04-19)
 
   * Fix typo in EXPLAIN document
   * Stop testing on broken Travis-CI environment
