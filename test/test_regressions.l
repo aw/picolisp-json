@@ -112,6 +112,12 @@
                   (json-decode "{\"test\":\"\\u005e\"}")
                   "Regression test GH issue #15 - Invalid parsing of certain characters with \uNNNN (3)" ) ]
 
+#  Unable to parse empty arrays with quotes https://github.com/aw/picolisp-json/issues/19
+[de test-gh-issue-19 ()
+  (assert-equal   '(("myarray" T) ("test" . 12345))
+                  (json-decode "{\"myarray\":[\"\"],\"test\":12345}")
+                  "Regression test GH issue #19 - Unable to parse empty arrays with quotes" ) ]
+
 [execute
   '(test-gh-issue-4)
   '(test-gh-issue-5)
@@ -121,4 +127,5 @@
   '(test-gh-issue-11)
   '(test-gh-issue-12)
   '(test-gh-issue-13)
-  '(test-gh-issue-15) ]
+  '(test-gh-issue-15)
+  '(test-gh-issue-19) ]

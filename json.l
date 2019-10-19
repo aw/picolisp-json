@@ -87,7 +87,9 @@
         (pop '*Json)
         (when (= "," (car *Json))
               (pop '*Json)
-              (eval Linker) ]
+              (eval Linker) )
+        (when (= NIL (car *Json))
+              (cut 2 '*Json) ]
 
 [de json-link-array ()
   (json-link-generic '(json-array-check Name)

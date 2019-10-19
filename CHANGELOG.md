@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.1.0 (2019-10-19)
+
+  * Fix issue #19 - Unable to parse empty arrays with quotes
+  * Add regression tests for this issue
+
 ## 4.0.0 (2019-04-19)
 
   * Fix typo in EXPLAIN document
