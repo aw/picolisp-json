@@ -88,7 +88,7 @@
         (when (= "," (car *Json))
               (pop '*Json)
               (eval Linker) )
-        (when (= NIL (car *Json))
+        (unless (car *Json)
               (cut 2 '*Json) ]
 
 [de json-link-array ()
