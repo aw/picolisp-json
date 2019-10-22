@@ -116,7 +116,10 @@
 [de test-gh-issue-19 ()
   (assert-equal   '(("myarray" T) ("test" . 12345))
                   (json-decode "{\"myarray\":[\"\"],\"test\":12345}")
-                  "Regression test GH issue #19 - Unable to parse empty arrays with quotes" ) ]
+                  "Regression test GH issue #19 - Unable to parse empty arrays with quotes (1)" )
+  (assert-equal   '(("myarray" T) ("test" . 12345))
+                  (json-decode "{\"myarray\":[],\"test\":12345}")
+                  "Regression test GH issue #19 - Unable to parse empty arrays with quotes (2)" ) ]
 
 [execute
   '(test-gh-issue-4)
