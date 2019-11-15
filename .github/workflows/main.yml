@@ -22,7 +22,7 @@ jobs:
         export PATH=$PATH:/tmp/picoLisp
 
     - name: Build PicoLisp 64-bit
-      if: ${{matrix.arch}} == 'src64'
+      if: matrix.arch == 'src64'
       run: |
         cd /tmp/picoLisp/${{matrix.arch}}
         make
