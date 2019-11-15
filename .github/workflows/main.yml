@@ -11,6 +11,8 @@ jobs:
         version: [19.6]      
     steps:
     - uses: actions/checkout@v1
+    - name: Update Ubuntu environment
+      run: apt-get update
     - name: Install PicoLisp and its dependencies
       run: sudo apt-get install picolisp libc6-dev-i386 libc6-i386 linux-libc-dev gcc-multilib
 
