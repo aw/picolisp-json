@@ -23,12 +23,13 @@ jobs:
 
     - name: Build PicoLisp 32-bit
       working-directory: /tmp
+      env:
+        PATH: $PATH:/tmp/picoLisp
       run: |
         wget http://software-lab.de/picoLisp-${{matrix.version}}.tgz -O picolisp.tgz
         tar -xf picolisp.tgz
         cd picoLisp/src
         make
-        export PATH=$PATH:/tmp/picoLisp
 
     - name: Build PicoLisp 64-bit
       if: matrix.arch == 'src64'
