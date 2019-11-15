@@ -30,7 +30,7 @@ jobs:
         make
 
     - name: Build PicoLisp 64-bit
-      if: matrix.arch == 'src64'
+      if: matrix.arch == 'src64' and matrix.version != '3.1.11'
       working-directory: /tmp/picoLisp/${{matrix.arch}}
       run: make
 
