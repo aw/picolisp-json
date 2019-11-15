@@ -23,10 +23,8 @@ jobs:
 
     - name: Build PicoLisp 32-bit
       working-directory: /tmp
-      env:
-        PATH: $PATH:/tmp/picoLisp
       run: |
-        wget http://software-lab.de/picoLisp-${{matrix.version}}.tgz -O picolisp.tgz
+        curl -o picolisp.tgz http://software-lab.de/picoLisp-${{matrix.version}}.tgz
         tar -xf picolisp.tgz
         cd picoLisp/src
         make
@@ -37,4 +35,6 @@ jobs:
       run: make
 
     - name: Run the tests on PicoLisp ${{matrix.arch}} v${{matrix.version}}
-      run: make check
+      run: |
+        export PATH=$PATH:/tmp/picoLisp
+        make check
