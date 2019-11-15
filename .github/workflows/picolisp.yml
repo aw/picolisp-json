@@ -1,0 +1,26 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [src64]
+        version: [19.6]      
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install PicoLisp and its dependencies
+      run: sudo apt-get install picolisp libc6-dev-i386 libc6-i386 linux-libc-dev gcc-multilib
+
+    - name: Build PicoLisp
+      run: |
+        wget http://software-lab.de/picoLisp-${{matrix.version}}.tgz -O /tmp/picolisp.tgz
+        cd /tmp; tar -xf /tmp/picolisp.tgz
+        cd /tmp/picoLisp/${{matrix.arch}} && make
+
+    - name: Run the tests on PicoLisp ${{matrix.arch}} v${{matrix.version}}
+      run: |
+        export PATH=$PATH:/tmp/picoLisp
+        cd ${TRAVIS_BUILD_DIR} && make check
