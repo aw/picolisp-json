@@ -18,13 +18,13 @@ jobs:
     - name: Update Ubuntu environment
       run: sudo apt-get update
 
-    - name: Install PicoLisp and its dependencies
+    - name: Install PicoLisp dependencies
       run: sudo apt-get install libc6-dev-i386 libc6-i386 linux-libc-dev gcc-multilib
 
     - name: Build PicoLisp 32-bit
       working-directory: /tmp
       run: |
-        curl -o picolisp.tgz http://software-lab.de/picoLisp-${{matrix.version}}.tgz
+        curl -o picolisp.tgz https://software-lab.de/picoLisp-${{matrix.version}}.tgz
         tar -xf picolisp.tgz
         cd picoLisp/src
         make
