@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        arch: [src64]
+        arch: [src, src64]
         version: [17.12, 18.6, 18.12, 19.6]
     steps:
     - uses: actions/checkout@v1
