@@ -25,4 +25,4 @@ jobs:
     - name: Run the tests on PicoLisp ${{matrix.arch}} v${{matrix.version}}
       run: |
         export PATH=$PATH:/tmp/picoLisp
-        cd ${GITHUB_WORKSPACE}/picolisp-json && make check
+        cd ${GITHUB_WORKSPACE} && make check
