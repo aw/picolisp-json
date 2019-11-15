@@ -14,20 +14,20 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-
-    - name: Update Ubuntu environment
-      run: sudo apt-get update
-
-    - name: Install PicoLisp and its dependencies
-      run: sudo apt-get install picolisp libc6-dev-i386 libc6-i386 linux-libc-dev gcc-multilib
-
-    - name: Build PicoLisp
+    - name: Build PicoLisp 32-bit
       run: |
         wget http://software-lab.de/picoLisp-${{matrix.version}}.tgz -O /tmp/picolisp.tgz
         cd /tmp; tar -xf /tmp/picolisp.tgz
-        cd /tmp/picoLisp/${{matrix.arch}} && make
+        cd /tmp/picoLisp/src && make
+        export PATH=$PATH:/tmp/picoLisp
+
+    - name: Build PicoLisp 64-bit
+      if: ${{matrix.arch}} == 'src64'
+      run: |
+        cd /tmp/picoLisp/${{matrix.arch}}
+        make
 
     - name: Run the tests on PicoLisp ${{matrix.arch}} v${{matrix.version}}
       run: |
-        export PATH=$PATH:/tmp/picoLisp
-        cd ${GITHUB_WORKSPACE} && make check
+        cd ${GITHUB_WORKSPACE}
+        make check
