@@ -4,15 +4,20 @@ on: [push]
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         arch: [src, src64]
         version: [17.12, 18.6, 18.12, 19.6]
+
     steps:
     - uses: actions/checkout@v1
+
     - name: Update Ubuntu environment
       run: sudo apt-get update
+
     - name: Install PicoLisp and its dependencies
       run: sudo apt-get install picolisp libc6-dev-i386 libc6-i386 linux-libc-dev gcc-multilib
 
