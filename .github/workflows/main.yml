@@ -13,29 +13,29 @@ jobs:
         version: [3.1.11, 17.12, 18.6, 18.12, 19.6]
 
     steps:
-    - uses: actions/checkout@v1
-      env:
-        PATH: $PATH:/tmp/picoLisp
+      - uses: actions/checkout@v1
+        env:
+          PATH: $PATH:/tmp/picoLisp
 
-    - name: Update Ubuntu environment
-      run: sudo apt-get update
+      - name: Update Ubuntu environment
+        run: sudo apt-get update
 
-    - name: Install PicoLisp dependencies
-      run: sudo apt-get install libc6-dev-i386 libc6-i386 linux-libc-dev gcc-multilib
+      - name: Install PicoLisp dependencies
+        run: sudo apt-get install libc6-dev-i386 libc6-i386 linux-libc-dev gcc-multilib
 
-    - name: Build PicoLisp 32-bit
-      working-directory: /tmp
-      run: |
-        curl -o picolisp.tgz https://software-lab.de/picoLisp-${{matrix.version}}.tgz
-        tar -xf picolisp.tgz
-        cd picoLisp/src
-        make
+      - name: Build PicoLisp 32-bit
+        working-directory: /tmp
+        run: |
+          curl -o picolisp.tgz https://software-lab.de/picoLisp-${{matrix.version}}.tgz
+          tar -xf picolisp.tgz
+          cd picoLisp/src
+          make
 
-    - name: Build PicoLisp 64-bit
-      if: matrix.arch == 'src64' && matrix.version != '3.1.11'
-      working-directory: /tmp/picoLisp/${{matrix.arch}}
-      run: make
+      - name: Build PicoLisp 64-bit
+        if: matrix.arch == 'src64' && matrix.version != '3.1.11'
+        working-directory: /tmp/picoLisp/${{matrix.arch}}
+        run: make
 
-    - name: Run the tests on PicoLisp ${{matrix.arch}} v${{matrix.version}}
-      run: |
-        make check
+      - name: Run the tests on PicoLisp ${{matrix.arch}} v${{matrix.version}}
+        run: |
+          make check
