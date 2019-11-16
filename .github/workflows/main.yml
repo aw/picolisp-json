@@ -4,6 +4,8 @@ on: [push]
 
 jobs:
   build:
+    env:
+      PATH: $PATH:/tmp/picoLisp
 
     runs-on: ubuntu-latest
 
@@ -14,8 +16,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-        env:
-          PATH: $PATH:/tmp/picoLisp
 
       - name: Update Ubuntu environment
         run: sudo apt-get update
