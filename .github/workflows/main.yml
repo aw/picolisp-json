@@ -5,7 +5,7 @@ on: [push]
 jobs:
   build:
     env:
-      PATH: $PATH:/tmp/picoLisp
+      PATH: ${PATH}:/tmp/picoLisp
 
     runs-on: ubuntu-latest
 
