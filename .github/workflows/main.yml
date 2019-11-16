@@ -16,8 +16,8 @@ jobs:
       - uses: actions/checkout@v1
       - uses: aw/picolisp-action@v1
         with:
-          version: matrix.version
-          architecture: matrix.arch
+          version: ${{matrix.version}}
+          architecture: ${{matrix.arch}}
 
       - name: Run the tests on PicoLisp ${{matrix.arch}} v${{matrix.version}}
         run: |
