@@ -7,38 +7,17 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    timeout-minutes: 30
-
     strategy:
       matrix:
-        arch: [src64]
-        version: [19.6]
+        arch: [src, src64]
+        version: [17.12, 18.6, 18.12, 19.6]
 
     steps:
       - uses: actions/checkout@v1
+      - uses: aw/picolisp-action@v1
         with:
-          version: matrix.version
-          architecture: matrix.arch
-
-      - name: Build PicoLisp 32-bit
-        working-directory: /tmp
-        run: |
-          curl -o picolisp.tgz https://software-lab.de/picoLisp-${{matrix.version}}.tgz
-          tar -xf picolisp.tgz
-          cd picoLisp/src
-          make
-
-      - name: Build PicoLisp 64-bit
-        if: matrix.arch == 'src64' && matrix.version != '3.1.11'
-        working-directory: /tmp/picoLisp/src64
-        run: make
-
-      - name: Install PicoLisp globally
-        run: |
-          sudo ln -s /tmp/picoLisp /usr/lib/picolisp
-          sudo ln -s /usr/lib/picolisp/bin/picolisp /usr/bin
-          sudo ln -s /usr/lib/picolisp/bin/pil /usr/bin
-          sudo ln -s /tmp/picoLisp /usr/share/picolisp
+          version: ${{matrix.version}}
+          architecture: ${{matrix.arch}}
 
       - name: Run the tests on PicoLisp ${{matrix.arch}} v${{matrix.version}}
         run: |
