@@ -11,8 +11,8 @@ jobs:
 
     strategy:
       matrix:
-        arch: [src, src64]
-        version: [17.12, 18.6, 18.12, 19.6]
+        arch: ['src', 'src64']
+        version: ['17.12', '18.6', '18.12', '19.6', 'latest']
 
     steps:
       - uses: actions/checkout@v1
@@ -22,5 +22,4 @@ jobs:
           architecture: ${{matrix.arch}}
 
       - name: Run the tests on PicoLisp ${{matrix.arch}} v${{matrix.version}}
-        run: |
-          make check
+        run: make check
