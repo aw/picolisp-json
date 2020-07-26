@@ -5,7 +5,7 @@
   ("source"     "https://github.com/aw/picolisp-json.git")
   ("author"     "Alexander Williams")
   ("license"    "MIT")
-  ("copyright"  "(c) 2015-2019 Alexander Williams, Unscramble <license@unscramble.jp>")
+  ("copyright"  "(c) 2015-2020 Alexander Williams, Unscramble <license@unscramble.jp>")
   ("install"    "make")
   ("requires"
     ("picolisp-unit"    "v3.0.0"        "https://github.com/aw/picolisp-unit.git") ]

@@ -22,8 +22,8 @@ Please read [EXPLAIN.md](EXPLAIN.md) to learn more about PicoLisp and the older 
 
 # Requirements
 
-  * PicoLisp 32-bit `v3.1.11` to `v19.6` (tested)
-  * PicoLisp 64-bit `v17.12` to `v19.6` (tested)
+  * PicoLisp 32-bit `v3.1.11` to `v20.6` (tested)
+  * PicoLisp 64-bit `v17.12` to `v20.6` (tested)
 
 **BREAKING CHANGE since v4.0.0:** Namespaces have been completely removed, and all function names are now prefixed with _json-_ (see [Changelog](CHANGELOG.md)).
 
@@ -153,4 +153,4 @@ If you want to improve this library, please make a pull-request.
 
 [MIT License](LICENSE)
 
-Copyright (c) 2015-2019 Alexander Williams, Unscramble <license@unscramble.jp>
+Copyright (c) 2015-2020 Alexander Williams, Unscramble <license@unscramble.jp>

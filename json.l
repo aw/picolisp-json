@@ -2,7 +2,7 @@
 #
 # The MIT License (MIT)
 #
-# Copyright (c) 2015-2019 Alexander Williams, Unscramble <license@unscramble.jp>
+# Copyright (c) 2015-2020 Alexander Williams, Unscramble <license@unscramble.jp>
 
 (setq *Json_control_characters (extract '((N) (unless (member N '("^H" "^L" "^J" "^M" "^I")) N)) (mapcar char (range 1 31))))
 
