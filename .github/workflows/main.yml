@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - uses: aw/picolisp-action@222d660
+      - uses: aw/picolisp-action@c1d0ae3
         with:
           version: ${{matrix.version}}
           architecture: ${{matrix.arch}}
