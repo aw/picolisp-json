@@ -24,6 +24,7 @@ Please read [EXPLAIN.md](EXPLAIN.md) to learn more about PicoLisp and the older 
 
   * PicoLisp 32-bit `v3.1.11` to `v20.6` (tested)
   * PicoLisp 64-bit `v17.12` to `v20.6` (tested)
+  * PicoLisp 64-bit `pil21` (tested)
 
 **BREAKING CHANGE since v4.0.0:** Namespaces have been completely removed, and all function names are now prefixed with _json-_ (see [Changelog](CHANGELOG.md)).
 
